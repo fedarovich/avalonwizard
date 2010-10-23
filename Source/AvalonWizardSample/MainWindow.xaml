@@ -1,0 +1,26 @@
+﻿<Window x:Class="AvalonWizardSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:aw="clr-namespace:AvalonWizard;assembly=AvalonWizard"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <aw:Wizard>
+            <aw:WizardPage Header="Page1" Background="Red">
+                <Grid>
+                    <Button VerticalAlignment="Center" HorizontalAlignment="Center">Click Me!</Button>
+                </Grid>
+                
+            </aw:WizardPage>
+            <aw:WizardPage Header="Page2" Background="Green">
+                <TabControl>
+                    <TabItem />
+                    <Button />
+                    <TabItem />
+                </TabControl>
+            </aw:WizardPage>
+            <Button>Test</Button>
+            <aw:WizardPage Header="Page3" Background="Blue" IsFinishPage="true">
+            </aw:WizardPage>
+        </aw:Wizard>
+    </Grid>
+</Window>
