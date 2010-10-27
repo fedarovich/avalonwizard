@@ -44,8 +44,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BooleanInverterConvertor.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\VisibilityMultiConverter.cs" />
+    <Compile Include="DefaultNavigationStrategy.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="INavigationStrategy.cs" />
     <Compile Include="WizardPage.cs" />
+    <Compile Include="WizardPageCollection.cs" />
     <Compile Include="WizardPageConfirmEventArgs.cs" />
     <Compile Include="WizardPageInitEventArgs.cs" />
     <Page Include="Themes\Generic.xaml">

@@ -8,18 +8,22 @@
             <aw:WizardPage Header="Page1" Background="Red">
                 <Grid>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center">Click Me!</Button>
-                </Grid>
-                
+                </Grid>               
             </aw:WizardPage>
-            <aw:WizardPage Header="Page2" Background="Green">
+            <aw:WizardPage Header="Page2" Background="Green" AllowCancel="False" >
                 <TabControl>
                     <TabItem />
                     <Button />
                     <TabItem />
                 </TabControl>
             </aw:WizardPage>
-            <Button>Test</Button>
-            <aw:WizardPage Header="Page3" Background="Blue" IsFinishPage="true">
+            <aw:WizardPage Header="Page3" Background="Blue" ShowCancel="False">
+                <Grid>
+                    <CheckBox Content="Finish"
+                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=IsFinishPage}"/>
+                </Grid>
+            </aw:WizardPage>
+            <aw:WizardPage Header="Page4" Background="Blue">
             </aw:WizardPage>
         </aw:Wizard>
     </Grid>

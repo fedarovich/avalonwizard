@@ -32,7 +32,7 @@ namespace AvalonWizard
         {
             get
             {
-                return ItemsControl.ItemsControlFromItemContainer(this) as Wizard;
+                return LogicalTreeHelper.GetParent(this) as Wizard;
             }
         }
 
@@ -43,7 +43,7 @@ namespace AvalonWizard
         /// </para>
         /// <para>
         /// This is used to override the default behavior of going to the next page 
-        /// in the sequence defined within the <see cref = "Wizard.Items" /> collection.
+        /// in the sequence defined within the <see cref = "Wizard.Pages" /> collection.
         /// </para>
         /// </summary>
         /// <value>The wizard page to go to.</value>
