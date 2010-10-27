@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -9,47 +11,31 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AvalonWizard.Extensions;
 
 namespace AvalonWizard
 {
-    /// <summary>
-    /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
-    ///
-    /// Step 1a) Using this custom control in a XAML file that exists in the current project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:AvalonWizard"
-    ///
-    ///
-    /// Step 1b) Using this custom control in a XAML file that exists in a different project.
-    /// Add this XmlNamespace attribute to the root element of the markup file where it is 
-    /// to be used:
-    ///
-    ///     xmlns:MyNamespace="clr-namespace:AvalonWizard;assembly=AvalonWizard"
-    ///
-    /// You will also need to add a project reference from the project where the XAML file lives
-    /// to this project and Rebuild to avoid compilation errors:
-    ///
-    ///     Right click on the target project in the Solution Explorer and
-    ///     "Add Reference"->"Projects"->[Select this project]
-    ///
-    ///
-    /// Step 2)
-    /// Go ahead and use your control in the XAML file.
-    ///
-    ///     <MyNamespace:Wizard/>
-    ///
-    /// </summary>
-    public class Wizard : Selector
+    [DefaultProperty("Pages")]
+    [ContentProperty("Pages")]
+    public class Wizard : Control, IAddChild
     {
         public Wizard()
         {
-            //navigationManager = new NavigationManager(this);
+            pages = new WizardPageCollection();
+            pages.CollectionChanged += HandlePagesCollectionChanged;
+        }
+
+        private bool pageIsFinishPage;
+
+        public bool PageIsFinishPage
+        {
+            get { return pageIsFinishPage; }
+            set { pageIsFinishPage = value; }
         }
 
         static Wizard()
@@ -116,54 +102,39 @@ namespace AvalonWizard
         {
             if (nextPage == null)
             {
-                if (SelectedPage.IsFinishPage || SelectedIndex == Items.Count - 1)
+                if (CurrentPage == Pages.Last() || CurrentPage.IsFinishPage)
                 {
                     // TODO: Raise Finish event
                     return;
                 }
             }
-            else if (!Items.Contains(nextPage))
+            else if (!Pages.Contains(nextPage))
             {
                 throw new ArgumentException(
                     "When specifying a value for nextPage, it must already be in the Pages collection.", "nextPage");
             }
 
-            if (SelectedPage.CommitPage())
+            if (CurrentPage == null || CurrentPage.CommitPage())
             {
-                //pageHistory.Push(SelectedPage);
-                if (nextPage != null)
-                    SelectedItem = nextPage;
-                else if (SelectedPage.NextPage != null)
-                    SelectedItem = SelectedPage.NextPage;
-                else
-                    SelectedItem = Items[Items.IndexOf(SelectedPage) + 1];
+                pageHistory.Push(CurrentPage);
+                CurrentPage = nextPage ?? strategy.GetNextPage(this, CurrentPage);
             }
         }
 
         public virtual void PreviousPage()
         {
-            
-        }
-
-        public WizardPage SelectedPage
-        {
-            get
+            if (pageHistory.Count > 0)
             {
-                if (SelectedItem == null)
+                if (CurrentPage != null && CurrentPage.RollbackPage())
                 {
-                    return null;
+                    CurrentPage = pageHistory.Pop();
                 }
-
-                WizardPage page = SelectedItem as WizardPage;
-                if (page == null)
-                {
-                    page = ItemContainerGenerator.ContainerFromIndex(SelectedIndex) as WizardPage;
-                }
-                return page;
             }
         }
 
         #region [Dependency Properties]
+
+        #region [BackButtonContent]
 
         public Object BackButtonContent
         {
@@ -176,8 +147,10 @@ namespace AvalonWizard
             DependencyProperty.Register("BackButtonContent", typeof(Object), typeof(Wizard), 
                 new UIPropertyMetadata(Properties.Resources.BackButtonText));
 
+        #endregion [BackButtonContent]
 
-
+        #region [NextButtonContent]
+        
         public Object NextButtonContent
         {
             get { return (Object)GetValue(NextButtonContentProperty); }
@@ -189,8 +162,9 @@ namespace AvalonWizard
             DependencyProperty.Register("NextButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.NextButtonText));
 
+        #endregion [NextButtonContent]
 
-
+        #region [FinishButtonContent]
 
         public Object FinishButtonContent
         {
@@ -203,8 +177,9 @@ namespace AvalonWizard
             DependencyProperty.Register("FinishButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.FinishButtonText));
 
+        #endregion [FinishButtonContent]
 
-
+        #region [CancelButtonContent]
 
         public Object CancelButtonContent
         {
@@ -217,42 +192,216 @@ namespace AvalonWizard
             DependencyProperty.Register("CancelButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.CancelButtonText));
 
-        #endregion
+        #endregion [CancelButtonContent]
 
-        protected override DependencyObject GetContainerForItemOverride()
+        #region [CurrentPage]
+        
+        public WizardPage CurrentPage
         {
-            return new WizardPage();
-        }
-
-        protected override bool IsItemItsOwnContainerOverride(object item)
-        {
-            return item is WizardPage;
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-            base.ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
-        }
-
-        private void OnGeneratorStatusChanged(object sender, EventArgs e)
-        {
-            if (base.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            get
             {
-                if (base.HasItems && (base.SelectedIndex < 0))
-                {
-                    base.SelectedIndex = 0;
-                }
-                //this.UpdateSelectedContent();
+                return (WizardPage)GetValue(CurrentPageProperty);
+            }
+            private set
+            {
+                SetValue(CurrentPagePropertyKey, value);
             }
         }
 
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        private static readonly DependencyPropertyKey CurrentPagePropertyKey =
+            DependencyProperty.RegisterReadOnly("CurrentPage", typeof(WizardPage), typeof(Wizard), 
+                new UIPropertyMetadata(null, OnCurrentPageChanged, CoerceCurrentPage));
+
+        public static readonly DependencyProperty CurrentPageProperty = CurrentPagePropertyKey.DependencyProperty;
+
+        private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            base.PrepareContainerForItemOverride(element, item);
+            var wizard = (Wizard)d;
+            wizard.CurrentPageIndex = wizard.Pages.IndexOf(e.NewValue as WizardPage);
+            UpdateFirstLastPage(wizard);
         }
 
+        private static object CoerceCurrentPage(DependencyObject d, object basevalue)
+        {
+            var wizard = (Wizard)d;
+            var value = (WizardPage)basevalue;
+            
+            if (value == null || wizard.Pages.Contains(value))
+            {
+                return value;
+            }
 
-        //private readonly NavigationManager navigationManager;
+            return DependencyProperty.UnsetValue;
+        }
+
+        #endregion [CurrentPage]
+
+        #region [CurrentPageIndex]
+
+        public int CurrentPageIndex
+        {
+            get
+            {
+                return (int)GetValue(CurrentPageIndexProperty);
+            }
+            private set
+            {
+                SetValue(CurrentPageIndexPropertyKey, value);
+            }
+        }
+
+        private static readonly DependencyPropertyKey CurrentPageIndexPropertyKey =
+            DependencyProperty.RegisterReadOnly("CurrentPageIndex", typeof(int), typeof(Wizard),
+            new UIPropertyMetadata(-1), ValidateCurrentPageIndex);
+
+        public static readonly DependencyProperty CurrentPageIndexProperty =
+            CurrentPageIndexPropertyKey.DependencyProperty;
+
+        private static bool ValidateCurrentPageIndex(object value)
+        {
+            return (int)value >= -1;
+        }
+
+        #endregion [CurrentPageIndex]
+
+        #region [HasPages]
+
+        public bool HasPages
+        {
+            get { return (bool)GetValue(HasPagesProperty); }
+            private set { SetValue(HasPagesPropertyKey, value); }
+        }
+
+        private static readonly DependencyPropertyKey HasPagesPropertyKey =
+            DependencyProperty.RegisterReadOnly("HasPages", typeof (bool), typeof (Wizard),
+                                                new UIPropertyMetadata(false));
+
+        public static readonly DependencyProperty HasPagesProperty =
+            HasPagesPropertyKey.DependencyProperty;
+
+        #endregion [HasPages]
+
+        #region [IsFirstPage]
+
+        public bool IsFirstPage
+        {
+            get { return (bool)GetValue(IsFirstPageProperty); }
+            private set { SetValue(IsFirstPagePropertyKey, value); }
+        }
+
+        private static readonly DependencyPropertyKey IsFirstPagePropertyKey =
+            DependencyProperty.RegisterReadOnly("IsFirstPage", typeof (bool), typeof (Wizard),
+                                                new UIPropertyMetadata(true));
+
+        public static readonly DependencyProperty IsFirstPageProperty =
+            IsFirstPagePropertyKey.DependencyProperty;
+
+        #endregion [IsFirstPage]
+
+        #region [IsLastPage]
+
+        public bool IsLastPage
+        {
+            get { return (bool)GetValue(IsLastPageProperty); }
+            private set { SetValue(IsLastPagePropertyKey, value); }
+        }
+
+        private static readonly DependencyPropertyKey IsLastPagePropertyKey =
+            DependencyProperty.RegisterReadOnly("IsLastPage", typeof (bool), typeof (Wizard),
+                                                new UIPropertyMetadata(true));
+
+        public static readonly DependencyProperty IsLastPageProperty =
+            IsLastPagePropertyKey.DependencyProperty;
+
+        #endregion [IsLastPage]
+
+        #endregion
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Bindable(true)]
+        public WizardPageCollection Pages
+        {
+            get
+            {
+                return pages;
+            }
+        }
+
+        private void HandlePagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (Pages.Count == 0)
+            {
+                CurrentPage = null;
+            }
+            else if (CurrentPage == null)
+            {
+                CurrentPage = Pages.FirstOrDefault();
+            }
+
+            HasPages = Pages.Count > 0;
+            UpdateFirstLastPage(this);
+
+            if (e.Action.In(NotifyCollectionChangedAction.Add, NotifyCollectionChangedAction.Replace))
+            {
+                foreach (WizardPage wizardPage in e.NewItems)
+                {
+                    DependencyPropertyDescriptor desc = DependencyPropertyDescriptor.FromProperty(
+                        WizardPage.IsFinishPageProperty, typeof (WizardPage));
+                    desc.AddValueChanged(wizardPage, OnWizardPageIsFinishChanged);
+                }
+            }
+            else if (e.Action.In(NotifyCollectionChangedAction.Remove, NotifyCollectionChangedAction.Replace))
+            {
+                foreach (WizardPage wizardPage in e.OldItems)
+                {
+                    DependencyPropertyDescriptor desc = DependencyPropertyDescriptor.FromProperty(
+                        WizardPage.IsFinishPageProperty, typeof(WizardPage));
+                    desc.RemoveValueChanged(wizardPage, OnWizardPageIsFinishChanged);
+                }
+            }
+        }
+
+        private void OnWizardPageIsFinishChanged(object sender, EventArgs e)
+        {
+            UpdateFirstLastPage(this);
+        }
+
+        private static void UpdateFirstLastPage(Wizard wizard)
+        {
+            wizard.IsFirstPage = wizard.CurrentPage == wizard.Pages.FirstOrDefault();
+            wizard.IsLastPage = wizard.CurrentPage == wizard.Pages.LastOrDefault() ||
+                                (wizard.CurrentPage != null && wizard.CurrentPage.IsFinishPage);
+        }
+
+        private readonly WizardPageCollection pages;
+
+        private readonly Stack<WizardPage> pageHistory = new Stack<WizardPage>();
+
+        private INavigationStrategy strategy = new DefaultNavigationStrategy();
+
+        #region Implementation of IAddChild
+
+        /// <summary>
+        /// Adds a child object. 
+        /// </summary>
+        /// <param name="value">The child object to add.</param>
+        void IAddChild.AddChild(object value)
+        {
+            var page = value as WizardPage;
+            if (page == null)
+                throw new ArgumentException("The object must be derived from WizardPage", "value");
+            
+            Pages.Add(page);
+        }
+
+        /// <summary>
+        /// Adds the text content of a node to the object. 
+        /// </summary>
+        /// <param name="text">The text to add to the object.</param>
+        void IAddChild.AddText(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

@@ -163,7 +163,6 @@
   </Style>
 
   <Style TargetType="{x:Type local:Wizard}">
-    <Setter Property="SelectedIndex" Value="0" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type local:Wizard}">
@@ -190,7 +189,7 @@
                   Command="PreviousPage"/>
                 <TextBlock Grid.Column="0" Margin="5" />
               </Grid>
-              <ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedItem}"/>
+              <!--<ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedItem}"/>-->
               <Separator Grid.Row="2" />
               <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>

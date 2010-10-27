@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace AvalonWizard.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class BooleanInverterConvertor : IValueConverter
     {
         #region Implementation of IValueConverter
 
@@ -25,18 +25,15 @@ namespace AvalonWizard.Converters
         /// </param>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool invert = false;
-            bool collapse = true;
-            if (parameter != null)
+            try
             {
-                String[] parts = parameter.ToString().ToUpperInvariant().Split(',');
-                invert = parts.Any(part => part == "INVERT");
-                collapse = parts.All(part => part != "HIDE");
+                var result = !System.Convert.ToBoolean(value, culture);
+                return result;
             }
-
-            bool visible = (bool)value ^ invert;
-            return visible ? Visibility.Visible : 
-                (collapse ? Visibility.Collapsed : Visibility.Hidden);
+            catch
+            {
+                return DependencyProperty.UnsetValue;
+            }
         }
 
         /// <summary>
@@ -52,7 +49,15 @@ namespace AvalonWizard.Converters
         /// </param>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = !System.Convert.ToBoolean(value, culture);
+                return result;
+            }
+            catch
+            {
+                return DependencyProperty.UnsetValue;
+            }
         }
 
         #endregion
