@@ -47,10 +47,13 @@
     <Compile Include="Converters\BooleanInverterConvertor.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityMultiConverter.cs" />
+    <Compile Include="CurrentPageChangedEventArgs.cs" />
     <Compile Include="DefaultNavigationStrategy.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="INavigationStrategy.cs" />
+    <Compile Include="Wizard97.cs" />
+    <Compile Include="WizardCommands.cs" />
     <Compile Include="WizardPage.cs" />
     <Compile Include="WizardPageCollection.cs" />
     <Compile Include="WizardPageConfirmEventArgs.cs" />

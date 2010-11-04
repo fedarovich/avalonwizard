@@ -22,6 +22,10 @@ namespace AvalonWizardSample
         public MainWindow()
         {
             InitializeComponent();
+
+            cmbNextPage.Items.Add(wizard.Pages[3]);
+            cmbNextPage.Items.Add(wizard.Pages[4]);
+            cmbNextPage.Items.Add(wizard.Pages[5]);
         }
     }
 }
