@@ -102,6 +102,20 @@ namespace AvalonWizard
 
         #endregion [AllowNext Property]
 
+        #region [AllowBack Property]
+
+        [DefaultValue(true)]
+        public bool AllowBack
+        {
+            get { return (bool)GetValue(AllowBackProperty); }
+            set { SetValue(AllowBackProperty, value); }
+        }
+
+        public static readonly DependencyProperty AllowBackProperty =
+            DependencyProperty.Register("AllowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+
+        #endregion [AllowBack Property]
+
         #region [ShowCancel Property]
 
         [DefaultValue(true)]
@@ -127,6 +141,20 @@ namespace AvalonWizard
 
         public static readonly DependencyProperty ShowNextProperty =
             DependencyProperty.Register("ShowNext", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+
+        #endregion [ShowNext Property]
+
+        #region [ShowBack Property]
+
+        [DefaultValue(true)]
+        public bool ShowBack
+        {
+            get { return (bool)GetValue(ShowBackProperty); }
+            set { SetValue(ShowBackProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowBackProperty =
+            DependencyProperty.Register("ShowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
         #endregion [ShowNext Property]
 

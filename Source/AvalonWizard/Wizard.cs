@@ -24,74 +24,42 @@ namespace AvalonWizard
     [ContentProperty("Pages")]
     public class Wizard : Control, IAddChild
     {
+        #region [Constructors]
+
         public Wizard()
         {
             pages = new WizardPageCollection();
             pages.CollectionChanged += HandlePagesCollectionChanged;
         }
 
-        private bool pageIsFinishPage;
-
-        public bool PageIsFinishPage
-        {
-            get { return pageIsFinishPage; }
-            set { pageIsFinishPage = value; }
-        }
-
         static Wizard()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Wizard), new FrameworkPropertyMetadata(typeof(Wizard)));
             
-            var backBinding = new CommandBinding(NavigationCommands.PreviousPage,
+            var backBinding = new CommandBinding(WizardCommands.PreviousPage,
                 OnBackCommand,
                 OnBackCommandCanExecute);
             CommandManager.RegisterClassCommandBinding(typeof(Wizard), backBinding);
 
-            var nextBinding = new CommandBinding(NavigationCommands.NextPage,
+            var nextBinding = new CommandBinding(WizardCommands.NextPage,
                 OnNextCommand,
                 OnNextCommandCanExecute);
             CommandManager.RegisterClassCommandBinding(typeof(Wizard), nextBinding);
+
+            var finishBinding = new CommandBinding(WizardCommands.Finish,
+                OnFinishCommand,
+                OnFinishCommandCanExecute);
+            CommandManager.RegisterClassCommandBinding(typeof(Wizard), finishBinding);
+
+            var cancelBinding = new CommandBinding(WizardCommands.Cancel,
+                OnCancelCommand,
+                OnCancelCommandCanExecute);
+            CommandManager.RegisterClassCommandBinding(typeof(Wizard), cancelBinding);
         }
 
-        #region Commands
+        #endregion [Constructors]
 
-        private static void OnBackCommand(Object sender, ExecutedRoutedEventArgs e)
-        {
-            var wizard = sender as Wizard;
-            if (wizard != null)
-            {
-                wizard.PreviousPage();
-            }
-        }
-
-        private static void OnBackCommandCanExecute(Object sender, CanExecuteRoutedEventArgs e)
-        {
-            var wizard = sender as Wizard;
-            if (wizard != null)
-            {
-                e.CanExecute = true;
-            }
-        }
-
-        private static void OnNextCommand(Object sender, ExecutedRoutedEventArgs e)
-        {
-            var wizard = sender as Wizard;
-            if (wizard != null)
-            {
-                wizard.NextPage();
-            }
-        }
-
-        private static void OnNextCommandCanExecute(Object sender, CanExecuteRoutedEventArgs e)
-        {
-            var wizard = sender as Wizard;
-            if (wizard != null)
-            {
-                e.CanExecute = true;
-            }
-        }
-
-        #endregion
+        #region [Public Methods]
 
         public virtual void NextPage()
         {
@@ -104,7 +72,7 @@ namespace AvalonWizard
             {
                 if (CurrentPage == Pages.Last() || CurrentPage.IsFinishPage)
                 {
-                    // TODO: Raise Finish event
+                    Finish();
                     return;
                 }
             }
@@ -131,6 +99,18 @@ namespace AvalonWizard
                 }
             }
         }
+
+        public virtual void Finish()
+        {
+            OnFinished(new RoutedEventArgs());
+        }
+
+        public virtual void Cancel()
+        {
+            OnCancelled(new RoutedEventArgs());
+        }
+
+        #endregion [Public Methods]
 
         #region [Dependency Properties]
 
@@ -217,8 +197,18 @@ namespace AvalonWizard
         private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var wizard = (Wizard)d;
-            wizard.CurrentPageIndex = wizard.Pages.IndexOf(e.NewValue as WizardPage);
+            var oldPage = e.OldValue as WizardPage;
+            var newPage = e.NewValue as WizardPage;
+            wizard.CurrentPageIndex = wizard.Pages.IndexOf(newPage);
+
+            if (newPage != null)
+            {
+                newPage.InitializePage(oldPage);
+            }
+            
             UpdateFirstLastPage(wizard);
+
+            wizard.OnCurrentPageChanged(new CurrentPageChangedEventArgs(oldPage, newPage));
         }
 
         private static object CoerceCurrentPage(DependencyObject d, object basevalue)
@@ -317,6 +307,8 @@ namespace AvalonWizard
 
         #endregion
 
+        #region [Public Properties]
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Bindable(true)]
         public WizardPageCollection Pages
         {
@@ -325,6 +317,202 @@ namespace AvalonWizard
                 return pages;
             }
         }
+
+        public INavigationStrategy NavigationStrategy
+        {
+            get
+            {
+                return strategy;
+            }
+            set
+            {
+                strategy = value ?? new DefaultNavigationStrategy();
+            }
+        }
+
+        #endregion [Public Properties]
+
+        #region [Public Events]
+
+        #region [Finished Event]
+
+        public static readonly RoutedEvent FinishedEvent = EventManager.RegisterRoutedEvent(
+            "Finished", RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (Wizard));
+
+        public event RoutedEventHandler Finished
+        {
+            add { AddHandler(FinishedEvent, value); }
+            remove { RemoveHandler(FinishedEvent, value); }
+        }
+
+        #endregion [Finished Event]
+
+        #region [Cancelled Event]
+
+        public static readonly RoutedEvent CancelledEvent = EventManager.RegisterRoutedEvent(
+            "Cancelled", RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (Wizard));
+
+        public event RoutedEventHandler Cancelled
+        {
+            add { AddHandler(CancelledEvent, value); }
+            remove { RemoveHandler(CancelledEvent, value); }
+        }
+
+        #endregion [Cancelled Event]
+
+        #region [CurrentPageChanged Event]
+
+        public static readonly RoutedEvent CurrentPageChangedEvent = EventManager.RegisterRoutedEvent(
+            "CurrentPageChanged", RoutingStrategy.Bubble, typeof (EventHandler<CurrentPageChangedEventArgs>), typeof (Wizard));
+
+        public event EventHandler<CurrentPageChangedEventArgs> CurrentPageChanged
+        {
+            add { AddHandler(CurrentPageChangedEvent, value); }
+            remove { RemoveHandler(CurrentPageChangedEvent, value); }
+        }
+
+        #endregion [CurrentPageChanged Event]
+
+        #endregion [Public Events]
+
+        #region [Protected Methods]
+
+        protected virtual void OnFinished(RoutedEventArgs args)
+        {
+            args.RoutedEvent = FinishedEvent;
+            RaiseEvent(args);
+        }
+
+        protected virtual void OnCancelled(RoutedEventArgs args)
+        {
+            args.RoutedEvent = CancelledEvent;
+            RaiseEvent(args);
+        }
+
+        protected virtual void OnCurrentPageChanged(CurrentPageChangedEventArgs args)
+        {
+            args.RoutedEvent = CancelledEvent;
+            RaiseEvent(args);
+        }
+
+        #endregion [Protected Methods]
+
+        #region [Commands]
+
+        private static void OnBackCommand(Object sender, ExecutedRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                wizard.PreviousPage();
+            }
+        }
+
+        private static void OnBackCommandCanExecute(Object sender, CanExecuteRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                e.CanExecute = !wizard.IsFirstPage && wizard.CurrentPage != null && wizard.CurrentPage.AllowBack;
+            }
+        }
+
+        private static void OnNextCommand(Object sender, ExecutedRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                if (e.Parameter == null)
+                {
+                    wizard.NextPage();                    
+                }
+                else if (e.Parameter is WizardPage)
+                {
+                    wizard.NextPage((WizardPage)e.Parameter);
+                }
+                else
+                {
+                    var converter = TypeDescriptor.GetConverter(typeof(int));
+                    if (converter.CanConvertFrom(e.Parameter.GetType()))
+                    {
+                        int index = (int)converter.ConvertFrom(e.Parameter);
+                        if (index >= 0 && index < wizard.Pages.Count)
+                        {
+                            wizard.NextPage(wizard.Pages[index]);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void OnNextCommandCanExecute(Object sender, CanExecuteRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                e.CanExecute = wizard.CurrentPage != null && wizard.CurrentPage.AllowNext;
+                if (e.CanExecute && e.Parameter != null)
+                {
+                    if (e.Parameter is WizardPage)
+                    {
+                        e.CanExecute &= wizard.Pages.Contains((WizardPage)e.Parameter);
+                    }
+                    else
+                    {
+                        var converter = TypeDescriptor.GetConverter(typeof(int));
+                        if (converter.CanConvertFrom(e.Parameter.GetType()))
+                        {
+                            int index = (int)converter.ConvertFrom(e.Parameter);
+                            e.CanExecute &= (index >= 0 && index < wizard.Pages.Count);
+                        }
+                        else
+                        {
+                            e.CanExecute = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void OnFinishCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                wizard.Finish();
+            }
+        }
+
+        private static void OnFinishCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                e.CanExecute = wizard.IsLastPage;
+            }
+        }
+
+        private static void OnCancelCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                wizard.Finish();
+            }
+        }
+
+        private static void OnCancelCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var wizard = sender as Wizard;
+            if (wizard != null)
+            {
+                e.CanExecute = wizard.CurrentPage == null || wizard.CurrentPage.AllowCancel;
+            }
+        }
+
+        #endregion [Commands]
+
+        #region [Private Methods]
 
         private void HandlePagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -363,6 +551,7 @@ namespace AvalonWizard
         private void OnWizardPageIsFinishChanged(object sender, EventArgs e)
         {
             UpdateFirstLastPage(this);
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private static void UpdateFirstLastPage(Wizard wizard)
@@ -372,13 +561,19 @@ namespace AvalonWizard
                                 (wizard.CurrentPage != null && wizard.CurrentPage.IsFinishPage);
         }
 
+        #endregion [Private Methods]
+
+        #region [Private Fields]
+
         private readonly WizardPageCollection pages;
 
         private readonly Stack<WizardPage> pageHistory = new Stack<WizardPage>();
 
-        private INavigationStrategy strategy = new DefaultNavigationStrategy();
+        private INavigationStrategy strategy = new DefaultNavigationStrategy(); 
 
-        #region Implementation of IAddChild
+        #endregion [Private Fields]
+
+        #region [Implementation of IAddChild]
 
         /// <summary>
         /// Adds a child object. 
@@ -402,6 +597,6 @@ namespace AvalonWizard
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion [Implementation of IAddChild]
     }
 }
