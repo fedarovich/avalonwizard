@@ -30,6 +30,16 @@ namespace AvalonWizard
         {
             pages = new WizardPageCollection();
             pages.CollectionChanged += HandlePagesCollectionChanged;
+
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (CurrentPage != null)
+            {
+                CurrentPage.InitializePage(null);
+            }
         }
 
         static Wizard()
@@ -201,7 +211,7 @@ namespace AvalonWizard
             var newPage = e.NewValue as WizardPage;
             wizard.CurrentPageIndex = wizard.Pages.IndexOf(newPage);
 
-            if (newPage != null)
+            if (wizard.IsLoaded && newPage != null)
             {
                 newPage.InitializePage(oldPage);
             }

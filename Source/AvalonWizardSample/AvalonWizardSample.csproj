@@ -62,6 +62,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EventLogItem.cs" />
     <Compile Include="EventLogWindow.xaml.cs">
       <DependentUpon>EventLogWindow.xaml</DependentUpon>
     </Compile>
