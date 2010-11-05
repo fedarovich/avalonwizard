@@ -2,10 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:aw="clr-namespace:AvalonWizard;assembly=AvalonWizard"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Avalon Wizard Sample" Height="350" Width="525" Left="100" Top="100">
     <Grid>
         <aw:Wizard Name="wizard">
-            <aw:WizardPage Header="Page1" 
+            <aw:Wizard.Resources>
+                <Style TargetType="aw:WizardPage">
+                    <Setter Property="Padding" Value="14" />
+                </Style>
+            </aw:Wizard.Resources>
+            <aw:WizardPage Header="Page 1: My Title" 
                            aw:Wizard97.Subtitle="My Subtitle"
                            aw:Wizard97.Icon="Wizard.png">
                 <Grid>
@@ -43,11 +48,10 @@
                     <TextBox Grid.Row="2" Grid.Column="1" 
                              Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
                                 Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </Grid>               
+                </Grid>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page2">
+            <aw:WizardPage Header="Page 2: Page Properties">
                 <StackPanel Margin="5">      
-                    <TextBlock FontWeight="Bold" Margin="0, 5">Page Properties:</TextBlock>
                     <CheckBox Content="IsFinishPage"
                               IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=IsFinishPage}"/>
                     <CheckBox Content="AllowCancel"
@@ -64,20 +68,37 @@
                               IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowBack}"/>
                 </StackPanel>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page3">
-                <StackPanel Margin="5" Orientation="Horizontal" VerticalAlignment="Top">
-                    <TextBlock Margin="10,2">Next Page:</TextBlock>
-                    <ComboBox Name="cmbNextPage" DisplayMemberPath="Header" Width="100" IsEditable="True" IsReadOnly="True"
+            <aw:WizardPage Header="Page 3: Next Page Selection">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <TextBlock Margin="0,2">Next Page:</TextBlock>
+                    <ComboBox Name="cmbNextPage" DisplayMemberPath="Header" IsEditable="True" IsReadOnly="True"
+                              Margin="10,0" HorizontalAlignment="Stretch" MinWidth="200"
                               SelectedIndex="0"
                               SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=NextPage, Mode=OneWayToSource}">
                     </ComboBox>
                 </StackPanel>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page4">
+            <aw:WizardPage Header="Page 4: Action Buttons">
+                <StackPanel>
+                    <Button Margin="20,5" Command="{x:Static aw:WizardCommands.NextPage}">
+                        Go to Next Page</Button>
+                    <Button Margin="20,5" Command="{x:Static aw:WizardCommands.NextPage}" CommandParameter="5">
+                        Go to Finish Page
+                    </Button>
+                </StackPanel>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page5">
+            <aw:WizardPage Header="Page 5: Custom Header Template">
+                <aw:WizardPage.HeaderTemplate>
+                    <DataTemplate DataType="String">
+                        <Grid Height="60">
+                            <Ellipse Fill="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="50, 5"/>
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        </Grid>
+                    </DataTemplate>
+                </aw:WizardPage.HeaderTemplate>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page6">
+            <aw:WizardPage Header="Page 6: Finish Page">
             </aw:WizardPage>
         </aw:Wizard>
     </Grid>

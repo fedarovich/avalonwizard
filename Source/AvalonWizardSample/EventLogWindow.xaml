@@ -1,0 +1,8 @@
+﻿<Window x:Class="AvalonWizardSample.EventLogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Events" Height="300" Width="525" Left="100" Top="500" WindowStyle="ToolWindow">
+    <ListBox Name="eventsList">
+        
+    </ListBox>
+</Window>

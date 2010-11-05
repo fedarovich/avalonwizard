@@ -391,7 +391,7 @@ namespace AvalonWizard
 
         protected virtual void OnCurrentPageChanged(CurrentPageChangedEventArgs args)
         {
-            args.RoutedEvent = CancelledEvent;
+            args.RoutedEvent = CurrentPageChangedEvent;
             RaiseEvent(args);
         }
 
@@ -497,7 +497,7 @@ namespace AvalonWizard
             var wizard = sender as Wizard;
             if (wizard != null)
             {
-                wizard.Finish();
+                wizard.Cancel();
             }
         }
 

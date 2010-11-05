@@ -107,7 +107,8 @@
                             <Separator Grid.Row="1" Margin="0"  />
                             <Border Grid.Row="2"
                                     Background="{TemplateBinding Background}"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Padding="{TemplateBinding Padding}">
                                 <ContentPresenter />
                             </Border>
                         </Grid>
