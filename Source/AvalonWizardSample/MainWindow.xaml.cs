@@ -22,6 +22,8 @@ namespace AvalonWizardSample
     {
         public MainWindow()
         {
+            logWindow = new EventLogWindow();
+
             InitializeComponent();
 
             cmbNextPage.Items.Add(wizard.Pages[3]);
@@ -39,25 +41,39 @@ namespace AvalonWizardSample
                 page.Initialize += LogPageInit;
             }
 
-            logWindow = new EventLogWindow();
             logWindow.Show();
         }
 
         private void LogWizardEvent(object sender, RoutedEventArgs e)
         {
-            logWindow.AddLogItem("Sender: Wizard. Event: {0}.", e.RoutedEvent.Name);
+            logWindow.AddLogItem(new EventLogItem
+                                     {
+                                         Sender = "Wizard",
+                                         EventName = e.RoutedEvent.Name
+                                     });
         }
 
         private void LogPageEvent(object sender, WizardPageConfirmEventArgs e)
         {
-            logWindow.AddLogItem("Sender: {0}. Event: {1}. Cancel: {2}.", 
-                e.Page.Header, e.RoutedEvent.Name, e.Cancel);
+            logWindow.AddLogItem(new EventLogItem
+                                     {
+                                         Sender = e.Page != null ? e.Page.Header.ToString() : "null",
+                                         EventName = e.RoutedEvent.Name,
+                                         ParameterName = "Cancel",
+                                         ParameterValue = e.Cancel.ToString()
+                                     });
         }
 
         private void LogPageInit(object sender, WizardPageInitEventArgs e)
         {
-            logWindow.AddLogItem("Sender: {0}. Event: {1}. Previous Page: {2}.", 
-                e.Page.Header, e.RoutedEvent.Name, e.PreviousPage.Header);
+            logWindow.AddLogItem(new EventLogItem
+                                     {
+                                         Sender = e.Page != null ? e.Page.Header.ToString() : "null",
+                                         EventName = e.RoutedEvent.Name,
+                                         ParameterName = "Cancel",
+                                         ParameterValue =
+                                             e.PreviousPage != null ? e.PreviousPage.Header.ToString() : "null"
+                                     });
         }
 
         private readonly EventLogWindow logWindow;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -19,18 +21,16 @@ namespace AvalonWizardSample
     public partial class EventLogWindow : Window
     {
         public EventLogWindow()
-        {
+        {           
             InitializeComponent();
         }
 
-        public void AddLogItem(String format, params Object[] args)
+        public void AddLogItem(EventLogItem logItem)
         {
-            if (!String.IsNullOrEmpty(format))
+            if (logItem != null)
             {
-                eventsList.Items.Add(String.Format(format, args));
+                eventsList.Items.Add(logItem);
             }
         }
-
-
     }
 }
