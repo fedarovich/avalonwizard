@@ -44,12 +44,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aero\AeroWizardHeader.cs" />
+    <Compile Include="Aero\WinApi.cs" />
     <Compile Include="Converters\BooleanInverterConvertor.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityMultiConverter.cs" />
     <Compile Include="CurrentPageChangedEventArgs.cs" />
     <Compile Include="DefaultNavigationStrategy.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="INavigationStrategy.cs" />
     <Compile Include="Wizard97.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="WizardPageCollection.cs" />
     <Compile Include="WizardPageConfirmEventArgs.cs" />
     <Compile Include="WizardPageInitEventArgs.cs" />
+    <Compile Include="WizardWindow.cs" />
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,7 +91,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <Page Include="Themes\Tero.NormalColor1.xaml">
+    <Page Include="Themes\Aero.NormalColor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
