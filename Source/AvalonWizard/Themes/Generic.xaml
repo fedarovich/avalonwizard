@@ -3,12 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:AvalonWizard"
-    xmlns:conv="clr-namespace:AvalonWizard.Converters">
+    xmlns:conv="clr-namespace:AvalonWizard.Converters" xmlns:Aero="clr-namespace:AvalonWizard.Aero">
 
     <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <conv:BooleanInverterConvertor x:Key="BooleanInverter" />
     <conv:VisibilityMultiConverter x:Key="VisibilityMultiConverter" />
-
+    
     <Style TargetType="{x:Type local:Wizard}">
         <Setter Property="Template">
             <Setter.Value>
@@ -139,5 +139,14 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+    </Style>
+
+    <Style TargetType="{x:Type Aero:AeroWizardHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Aero:AeroWizardHeader}">
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
