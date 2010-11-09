@@ -23,6 +23,7 @@ namespace AvalonWizard.Aero
         public AeroWizardHeader()
         {
             Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
         }
 
         static AeroWizardHeader()
@@ -40,7 +41,7 @@ namespace AvalonWizard.Aero
 
         private static readonly DependencyPropertyKey IsCompositionEnabledPropertyKey =
             DependencyProperty.RegisterReadOnly("IsCompositionEnabled", typeof(bool), typeof(AeroWizardHeader),
-                                                new UIPropertyMetadata(true));
+                                                new UIPropertyMetadata(false));
 
         public static readonly DependencyProperty IsCompositionEnabledProperty =
             IsCompositionEnabledPropertyKey.DependencyProperty;       
@@ -80,6 +81,20 @@ namespace AvalonWizard.Aero
             SetGlass();
         }
 
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (ParentWindow != null)
+            {
+                HwndSource.RemoveHook(WndProc);
+
+                DependencyPropertyDescriptor isActiveDesc = DependencyPropertyDescriptor.FromProperty(
+                    Window.IsActiveProperty, typeof(Window));
+                isActiveDesc.RemoveValueChanged(window, OnWindowActiveChanged);
+            }
+
+            ResetGlass();
+        }
+
         private void OnWindowActiveChanged(object sender, EventArgs e)
         {
             IsActive = ParentWindow.IsActive;
@@ -87,21 +102,42 @@ namespace AvalonWizard.Aero
 
         private void SetGlass()
         {
-            IsCompositionEnabled = WinApi.DwmIsCompositionEnabled();
-            if (IsCompositionEnabled && window != null)
+            IsCompositionEnabled = DesktopWindowManager.IsCompositionEnabled;
+            if (ParentWindow != null)
             {
-                HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-
-                // Create a margin structure
-                var margins = new WinApi.Margins
+                if (IsCompositionEnabled)
                 {
-                    Left = 0,
-                    Right = 0,
-                    Top = (int)this.ActualHeight,
-                    Bottom = 0
-                };
+                    orinalWindowBackground = ParentWindow.Background;
+                    ParentWindow.Background = Brushes.Transparent;
+                    HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 
-                WinApi.DwmExtendFrameIntoClientArea(HwndSource.Handle, ref margins);               
+                    // Create a margin structure
+                    var margins = new WinApi.Margins
+                                      {
+                                          Left = 0,
+                                          Right = 0,
+                                          Top = (int)this.ActualHeight,
+                                          Bottom = 0
+                                      };
+
+                    DesktopWindowManager.ExtendFrameIntoClientArea(HwndSource.Handle, ref margins);
+                }
+
+                DesktopWindowManager.SetTitleAndIconVisibility(HwndSource.Handle, false);
+            }
+        }
+
+        private void ResetGlass()
+        {
+            if (ParentWindow != null)
+            {
+                if (IsCompositionEnabled)
+                {
+                    ParentWindow.Background = orinalWindowBackground;
+                    DesktopWindowManager.ResetGlass(HwndSource.Handle);
+                }
+
+                DesktopWindowManager.SetTitleAndIconVisibility(HwndSource.Handle, true);
             }
         }
 
@@ -109,7 +145,7 @@ namespace AvalonWizard.Aero
         {
             if (msg.In(WinApi.WM_DWMCOMPOSITIONCHANGED, WinApi.WM_DWMNCRENDERINGCHANGED))
             {
-                IsCompositionEnabled = WinApi.DwmIsCompositionEnabled();
+                IsCompositionEnabled = DesktopWindowManager.IsCompositionEnabled;
                 if (IsCompositionEnabled)
                 {
                     SetGlass();
@@ -148,6 +184,8 @@ namespace AvalonWizard.Aero
         private Window window;
 
         private HwndSource hwndSource;
+
+        private Brush orinalWindowBackground;
 
         #endregion [Private Members]
     }

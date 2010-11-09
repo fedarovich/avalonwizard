@@ -32,6 +32,8 @@ namespace AvalonWizard
             pages.CollectionChanged += HandlePagesCollectionChanged;
 
             Loaded += OnLoaded;
+
+            UpdateEffectiveWizardStyle(WizardStyle.Auto);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -315,6 +317,47 @@ namespace AvalonWizard
 
         #endregion [IsLastPage]
 
+        #region [WizardStyle]
+
+        public WizardStyle WizardStyle
+        {
+            get { return (WizardStyle)GetValue(WizardStyleProperty); }
+            set { SetValue(WizardStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty WizardStyleProperty =
+            DependencyProperty.Register("WizardStyle", typeof(WizardStyle), typeof(Wizard), 
+                new UIPropertyMetadata(WizardStyle.Auto, OnWizardStyleChanged));
+
+        private static void OnWizardStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var wizard = d as Wizard;
+            if (wizard != null)
+            {
+                var style = (WizardStyle)e.NewValue;
+                wizard.UpdateEffectiveWizardStyle(style);
+            }
+        }
+
+        #endregion [WizardStyle]
+
+        #region [EffectiveWizardStyle]
+
+        public WizardStyle EffectiveWizardStyle
+        {
+            get { return (WizardStyle)GetValue(EffectiveWizardStyleProperty); }
+            private set { SetValue(EffectiveWizardStylePropertyKey, value); }
+        }
+
+        private static readonly DependencyPropertyKey EffectiveWizardStylePropertyKey =
+            DependencyProperty.RegisterReadOnly("EffectiveWizardStyle", typeof (WizardStyle), typeof (Wizard),
+                                                new UIPropertyMetadata(WizardStyle.Auto));
+
+        public static readonly DependencyProperty EffectiveWizardStyleProperty =
+            EffectiveWizardStylePropertyKey.DependencyProperty;
+
+        #endregion [EffectiveWizardStyle]
+
         #endregion
 
         #region [Public Properties]
@@ -569,6 +612,19 @@ namespace AvalonWizard
             wizard.IsFirstPage = wizard.CurrentPage == wizard.Pages.FirstOrDefault();
             wizard.IsLastPage = wizard.CurrentPage == wizard.Pages.LastOrDefault() ||
                                 (wizard.CurrentPage != null && wizard.CurrentPage.IsFinishPage);
+        }
+
+        private void UpdateEffectiveWizardStyle(WizardStyle style)
+        {
+            if (style == WizardStyle.Auto)
+            {
+                EffectiveWizardStyle = Environment.OSVersion.Version.Major >= 6 ?
+                    WizardStyle.Aero : WizardStyle.Wizard97;
+            }
+            else
+            {
+                EffectiveWizardStyle = style;
+            }
         }
 
         #endregion [Private Methods]

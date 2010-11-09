@@ -26,6 +26,10 @@ namespace AvalonWizardSample
 
             InitializeComponent();
 
+            cmbWizardStyle.Items.Add(WizardStyle.Aero);
+            cmbWizardStyle.Items.Add(WizardStyle.Wizard97);
+            cmbWizardStyle.Items.Add(WizardStyle.Auto);
+
             cmbNextPage.Items.Add(wizard.Pages[3]);
             cmbNextPage.Items.Add(wizard.Pages[4]);
             cmbNextPage.Items.Add(wizard.Pages[5]);
@@ -70,7 +74,7 @@ namespace AvalonWizardSample
                                      {
                                          Sender = e.Page != null ? e.Page.Header.ToString() : "null",
                                          EventName = e.RoutedEvent.Name,
-                                         ParameterName = "Cancel",
+                                         ParameterName = "Previous Page",
                                          ParameterValue =
                                              e.PreviousPage != null ? e.PreviousPage.Header.ToString() : "null"
                                      });
