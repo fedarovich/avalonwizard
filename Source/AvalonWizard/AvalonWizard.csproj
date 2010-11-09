@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aero\AeroWizardHeader.cs" />
+    <Compile Include="Aero\DesktopWindowManager.cs" />
     <Compile Include="Aero\WinApi.cs" />
     <Compile Include="Converters\BooleanInverterConvertor.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -59,7 +60,11 @@
     <Compile Include="WizardPageCollection.cs" />
     <Compile Include="WizardPageConfirmEventArgs.cs" />
     <Compile Include="WizardPageInitEventArgs.cs" />
-    <Compile Include="WizardWindow.cs" />
+    <Compile Include="WizardStyle.cs" />
+    <Page Include="Themes\AeroWizardHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +72,14 @@
     <Compile Include="Wizard.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Wizard97.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\WizardAero.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

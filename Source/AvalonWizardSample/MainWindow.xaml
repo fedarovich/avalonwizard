@@ -1,8 +1,8 @@
-﻿<aw:WizardWindow x:Class="AvalonWizardSample.MainWindow"
+﻿<Window x:Class="AvalonWizardSample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:aw="clr-namespace:AvalonWizard;assembly=AvalonWizard"
-        Icon="wizard.ico" Title="Avalon Wizard Sample" Background="Transparent"
+        Icon="wizard.ico" Title="Avalon Wizard Sample"
         Height="350" Width="525" Left="100" Top="100">
     <Grid>
         <aw:Wizard Name="wizard">
@@ -38,8 +38,13 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0">Theme</TextBlock>
-                    <ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0">
-                        <ComboBoxItem>Auto</ComboBoxItem>
+                    <ComboBox Name="cmbWizardStyle" Grid.Row="0" Grid.Column="1" SelectedIndex="0"
+                              SelectedValue="{Binding RelativeSource={RelativeSource AncestorType=aw:Wizard}, Path=WizardStyle, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="aw:WizardStyle">
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock Grid.Row="1" Grid.Column="0">Wizard Title</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="1" 
@@ -52,7 +57,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="0">Page Subtitle</TextBlock>
                     <TextBox Grid.Row="3" Grid.Column="1" 
                              Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
-                                Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                 Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </aw:WizardPage>
             <aw:WizardPage Header="Page 2: Page Properties">
@@ -107,4 +112,4 @@
             </aw:WizardPage>
         </aw:Wizard>
     </Grid>
-</aw:WizardWindow>
+</Window>
