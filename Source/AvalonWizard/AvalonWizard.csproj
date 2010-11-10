@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aero\AeroWizardHeader.cs" />
+    <Compile Include="Aero\AeroWizardPageChrome.cs" />
     <Compile Include="Aero\DesktopWindowManager.cs" />
     <Compile Include="Aero\WinApi.cs" />
     <Compile Include="Converters\BooleanInverterConvertor.cs" />
