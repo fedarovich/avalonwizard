@@ -46,10 +46,6 @@ namespace AvalonWizardSample
             cmbWizardStyle.Items.Add(WizardStyle.Wizard97);
             cmbWizardStyle.Items.Add(WizardStyle.Auto);
 
-            cmbNextPage.Items.Add(wizard.Pages[3]);
-            cmbNextPage.Items.Add(wizard.Pages[4]);
-            cmbNextPage.Items.Add(wizard.Pages[5]);
-
             wizard.Finished += LogWizardEvent;
             wizard.Cancelled += LogWizardEvent;
             wizard.CurrentPageChanged += LogWizardEvent;
@@ -96,6 +92,13 @@ namespace AvalonWizardSample
                                      });
         }
 
+        private void OnNextPageChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combo = (ComboBox)sender;
+            wizard.CurrentPage.NextPage = wizard.Pages.ElementAtOrDefault(combo.SelectedIndex + 3);
+        }
+
         private readonly EventLogWindow logWindow;
+
     }
 }
