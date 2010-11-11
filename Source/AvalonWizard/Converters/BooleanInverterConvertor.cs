@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace AvalonWizard.Converters
 {
+    /// <summary>
+    /// Invertes the <see cref="Boolean"/> values.
+    /// </summary>
     public class BooleanInverterConvertor : IValueConverter
     {
         #region Implementation of IValueConverter

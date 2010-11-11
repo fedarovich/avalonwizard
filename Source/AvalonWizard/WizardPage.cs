@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 
 namespace AvalonWizard
 {
+    /// <summary>
+    /// The page of <see cref="Wizard"/> control.
+    /// </summary>
     public class WizardPage : HeaderedContentControl
     {
         static WizardPage()
@@ -62,6 +65,12 @@ namespace AvalonWizard
 
         #region [IsFinishPage Property]
 
+        /// <summary>
+        /// Identifies the page as a the last page of the wizard.
+        /// </summary>
+        /// <remarks>
+        /// You may set this property on several pages if your wizard requires non-linear navigation.
+        /// </remarks>
         [DefaultValue(false)]
         public bool IsFinishPage
         {
@@ -69,6 +78,9 @@ namespace AvalonWizard
             set { SetValue(IsFinishPageProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="IsFinishPage"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsFinishPageProperty =
             DependencyProperty.Register("IsFinishPage", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(false));
 
@@ -76,6 +88,9 @@ namespace AvalonWizard
 
         #region [AllowCancel Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Cancel button is enabled on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool AllowCancel
         {
@@ -83,6 +98,9 @@ namespace AvalonWizard
             set { SetValue(AllowCancelProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="AllowCancel"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty AllowCancelProperty =
             DependencyProperty.Register("AllowCancel", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -90,6 +108,9 @@ namespace AvalonWizard
 
         #region [AllowNext Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Next button is enabled on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool AllowNext
         {
@@ -97,6 +118,9 @@ namespace AvalonWizard
             set { SetValue(AllowNextProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="AllowNext"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty AllowNextProperty =
             DependencyProperty.Register("AllowNext", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -104,6 +128,9 @@ namespace AvalonWizard
 
         #region [AllowBack Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Back button is enabled on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool AllowBack
         {
@@ -111,6 +138,9 @@ namespace AvalonWizard
             set { SetValue(AllowBackProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="AllowBack"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty AllowBackProperty =
             DependencyProperty.Register("AllowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -118,6 +148,9 @@ namespace AvalonWizard
 
         #region [ShowCancel Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Cancel button is visible on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool ShowCancel
         {
@@ -125,6 +158,9 @@ namespace AvalonWizard
             set { SetValue(ShowCancelProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="ShowCancel"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ShowCancelProperty =
             DependencyProperty.Register("ShowCancel", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -132,6 +168,9 @@ namespace AvalonWizard
 
         #region [ShowNext Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Next button is visible on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool ShowNext
         {
@@ -139,6 +178,9 @@ namespace AvalonWizard
             set { SetValue(ShowNextProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="ShowNext"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ShowNextProperty =
             DependencyProperty.Register("ShowNext", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -146,6 +188,9 @@ namespace AvalonWizard
 
         #region [ShowBack Property]
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the Back button is visible on this page.
+        /// </summary>
         [DefaultValue(true)]
         public bool ShowBack
         {
@@ -153,6 +198,9 @@ namespace AvalonWizard
             set { SetValue(ShowBackProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="ShowBack"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ShowBackProperty =
             DependencyProperty.Register("ShowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
@@ -164,15 +212,24 @@ namespace AvalonWizard
 
         #region [Initialize Event]
 
+        /// <summary>
+        /// Identifies the <see cref="Initialize"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent InitializeEvent = EventManager.RegisterRoutedEvent(
             "Initialize", RoutingStrategy.Bubble, typeof(EventHandler<WizardPageInitEventArgs>), typeof(WizardPage));
 
+        /// <summary>
+        /// Raised just before showing the page.
+        /// </summary>
         public event EventHandler<WizardPageInitEventArgs> Initialize
         {
             add { AddHandler(InitializeEvent, value); }
             remove { RemoveHandler(InitializeEvent, value); }
         }
 
+        /// <summary>
+        /// Invoked just before showing the page.
+        /// </summary>
         protected virtual void OnInitialize(WizardPageInitEventArgs args)
         {
             args.RoutedEvent = InitializeEvent;
@@ -183,15 +240,24 @@ namespace AvalonWizard
 
         #region [Commit Event]
 
+        /// <summary>
+        /// Identifies the <see cref="Commit"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent CommitEvent = EventManager.RegisterRoutedEvent(
             "Commit", RoutingStrategy.Bubble, typeof(EventHandler<WizardPageConfirmEventArgs>), typeof(WizardPage));
 
+        /// <summary>
+        /// Raised before going to the next page.
+        /// </summary>
         public event EventHandler<WizardPageConfirmEventArgs> Commit
         {
             add { AddHandler(CommitEvent, value); }
             remove { RemoveHandler(CommitEvent, value); }
         }
 
+        /// <summary>
+        /// Invoked before going to the next page.
+        /// </summary>
         protected virtual void OnCommit(WizardPageConfirmEventArgs args)
         {
             args.RoutedEvent = CommitEvent;
@@ -202,15 +268,24 @@ namespace AvalonWizard
 
         #region [Rollback Event]
 
+        /// <summary>
+        /// Identifies the <see cref="Rollback"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent RollbackEvent = EventManager.RegisterRoutedEvent(
             "Rollback", RoutingStrategy.Bubble, typeof(EventHandler<WizardPageConfirmEventArgs>), typeof(WizardPage));
 
+        /// <summary>
+        /// Raised before going to the previous page.
+        /// </summary>
         public event EventHandler<WizardPageConfirmEventArgs> Rollback
         {
             add { AddHandler(RollbackEvent, value); }
             remove { RemoveHandler(RollbackEvent, value); }
         }
 
+        /// <summary>
+        /// Invoked before going to the previous page.
+        /// </summary>
         protected virtual void OnRollback(WizardPageConfirmEventArgs args)
         {
             args.RoutedEvent = RollbackEvent;

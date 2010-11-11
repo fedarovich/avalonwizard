@@ -20,12 +20,19 @@ using AvalonWizard.Extensions;
 
 namespace AvalonWizard
 {
+    /// <summary>
+    /// <para>Wizard Control for Windows Presentation foundation.</para>
+    /// <para>The wizard supports two styles: the legacy Wizard 97 and the modern Aero Wizard.</para>
+    /// </summary>
     [DefaultProperty("Pages")]
     [ContentProperty("Pages")]
     public class Wizard : Control, IAddChild
     {
         #region [Constructors]
 
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
         public Wizard()
         {
             pages = new WizardPageCollection();
@@ -34,14 +41,6 @@ namespace AvalonWizard
             Loaded += OnLoaded;
 
             UpdateEffectiveWizardStyle(WizardStyle.Auto);
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (CurrentPage != null)
-            {
-                CurrentPage.InitializePage(null);
-            }
         }
 
         static Wizard()
@@ -73,11 +72,23 @@ namespace AvalonWizard
 
         #region [Public Methods]
 
+        /// <summary>
+        /// Steps to the next page or finishes the wizard if the current page is the last one.
+        /// </summary>
+        /// <seealso cref="NextPage(WizardPage)"/>
         public virtual void NextPage()
         {
             NextPage(null);
         }
 
+        /// <summary>
+        /// Steps to the specified page.
+        /// </summary>
+        /// <param name="nextPage">
+        /// The page to go. 
+        /// If the value is <c>null</c>, the wizard steps to the next page or finishes the wizard if the current page is the last one.
+        /// </param>
+        /// <seealso cref="NextPage()"/>
         public virtual void NextPage(WizardPage nextPage)
         {
             if (nextPage == null)
@@ -97,10 +108,40 @@ namespace AvalonWizard
             if (CurrentPage == null || CurrentPage.CommitPage())
             {
                 pageHistory.Push(CurrentPage);
-                CurrentPage = nextPage ?? strategy.GetNextPage(this, CurrentPage);
+                CurrentPage = nextPage ?? strategy.GetNextPage(this);
             }
         }
 
+        /// <summary>
+        /// Steps to the page with the specified name.
+        /// </summary>
+        /// <param name="pageName">Page name to navigate to.</param>
+        /// <exception cref="ArgumentException">
+        /// <see cref="Wizard.Pages"/> collection does not contains the page with the specified name.
+        /// </exception>
+        public virtual void NextPageByName(String pageName)
+        {
+            var page = Pages.First(p => p.Name == pageName);
+            if (page == null)
+            {
+                throw new ArgumentException("Page with the specified name is not found", "pageName");
+            }
+            NextPage(page);
+        }
+
+        /// <summary>
+        /// Steps to the page with the specified index in <see cref="Wizard.Pages"/> collection.
+        /// </summary>
+        /// <param name="pageIndex">Page index to navigate to.</param>
+        /// <exception cref="IndexOutOfRangeException">Page index is out of range.</exception>
+        public virtual void NextPageByIndex(int pageIndex)
+        {
+            NextPage(Pages[pageIndex]);
+        }
+
+        /// <summary>
+        /// Steps to previous page.
+        /// </summary>
         public virtual void PreviousPage()
         {
             if (pageHistory.Count > 0)
@@ -112,11 +153,17 @@ namespace AvalonWizard
             }
         }
 
+        /// <summary>
+        /// Finishes the wizard.
+        /// </summary>
         public virtual void Finish()
         {
             OnFinished(new RoutedEventArgs());
         }
 
+        /// <summary>
+        /// Cancels the wizard.
+        /// </summary>
         public virtual void Cancel()
         {
             OnCancelled(new RoutedEventArgs());
@@ -128,13 +175,18 @@ namespace AvalonWizard
 
         #region [BackButtonContent]
 
+        /// <summary>
+        /// Gets or sets the content of the Back button.
+        /// </summary>
         public Object BackButtonContent
         {
             get { return (Object)GetValue(BackButtonContentProperty); }
             set { SetValue(BackButtonContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for BackButtonContent.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Identifies <see cref="BackButtonContent"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty BackButtonContentProperty =
             DependencyProperty.Register("BackButtonContent", typeof(Object), typeof(Wizard), 
                 new UIPropertyMetadata(Properties.Resources.BackButtonText));
@@ -143,13 +195,18 @@ namespace AvalonWizard
 
         #region [NextButtonContent]
         
+        /// <summary>
+        /// Gets or sets the content of the Next button.
+        /// </summary>
         public Object NextButtonContent
         {
             get { return (Object)GetValue(NextButtonContentProperty); }
             set { SetValue(NextButtonContentProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for NextButtonContent.  This enables animation, styling, binding, etc...
+        
+        /// <summary>
+        /// Identifies <see cref="NextButtonContent"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty NextButtonContentProperty =
             DependencyProperty.Register("NextButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.NextButtonText));
@@ -158,13 +215,18 @@ namespace AvalonWizard
 
         #region [FinishButtonContent]
 
+        /// <summary>
+        /// Gets or sets the content of the Finish button.
+        /// </summary>
         public Object FinishButtonContent
         {
             get { return (Object)GetValue(FinishButtonContentProperty); }
             set { SetValue(FinishButtonContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FinishButtonContent.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Identifies <see cref="FinishButtonContent"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty FinishButtonContentProperty =
             DependencyProperty.Register("FinishButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.FinishButtonText));
@@ -173,13 +235,18 @@ namespace AvalonWizard
 
         #region [CancelButtonContent]
 
+        /// <summary>
+        /// Gets or sets the content of the Cancel button.
+        /// </summary>
         public Object CancelButtonContent
         {
             get { return (Object)GetValue(CancelButtonContentProperty); }
             set { SetValue(CancelButtonContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CancelButtonContent.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Identifies <see cref="CancelButtonContent"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CancelButtonContentProperty =
             DependencyProperty.Register("CancelButtonContent", typeof(Object), typeof(Wizard),
                 new UIPropertyMetadata(Properties.Resources.CancelButtonText));
@@ -188,6 +255,9 @@ namespace AvalonWizard
 
         #region [CurrentPage]
         
+        /// <summary>
+        /// Gets the current page.
+        /// </summary>
         public WizardPage CurrentPage
         {
             get
@@ -204,6 +274,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("CurrentPage", typeof(WizardPage), typeof(Wizard), 
                 new UIPropertyMetadata(null, OnCurrentPageChanged, CoerceCurrentPage));
 
+        /// <summary>
+        /// Identifies <see cref="CurrentPage"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CurrentPageProperty = CurrentPagePropertyKey.DependencyProperty;
 
         private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -240,6 +313,9 @@ namespace AvalonWizard
 
         #region [CurrentPageIndex]
 
+        /// <summary>
+        /// Gets the current page's index.
+        /// </summary>
         public int CurrentPageIndex
         {
             get
@@ -256,6 +332,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("CurrentPageIndex", typeof(int), typeof(Wizard),
             new UIPropertyMetadata(-1), ValidateCurrentPageIndex);
 
+        /// <summary>
+        /// Identifies <see cref="CurrentPageIndex"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CurrentPageIndexProperty =
             CurrentPageIndexPropertyKey.DependencyProperty;
 
@@ -268,6 +347,9 @@ namespace AvalonWizard
 
         #region [HasPages]
 
+        /// <summary>
+        /// Gets the value indicating whether the wizard has any pages.
+        /// </summary>
         public bool HasPages
         {
             get { return (bool)GetValue(HasPagesProperty); }
@@ -278,6 +360,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("HasPages", typeof (bool), typeof (Wizard),
                                                 new UIPropertyMetadata(false));
 
+        /// <summary>
+        /// Identifies <see cref="HasPages"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty HasPagesProperty =
             HasPagesPropertyKey.DependencyProperty;
 
@@ -285,6 +370,9 @@ namespace AvalonWizard
 
         #region [IsFirstPage]
 
+        /// <summary>
+        /// Gets the value indicating whether the current page is the first page.
+        /// </summary>
         public bool IsFirstPage
         {
             get { return (bool)GetValue(IsFirstPageProperty); }
@@ -295,6 +383,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("IsFirstPage", typeof (bool), typeof (Wizard),
                                                 new UIPropertyMetadata(true));
 
+        /// <summary>
+        /// Identifies <see cref="IsFirstPage"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsFirstPageProperty =
             IsFirstPagePropertyKey.DependencyProperty;
 
@@ -302,6 +393,10 @@ namespace AvalonWizard
 
         #region [IsLastPage]
 
+        /// <summary>
+        /// Gets the value indicating whether the current page is either last page or
+        /// has the <see cref="WizardPage.IsFinishPage"/> property set to <c>true</c>.
+        /// </summary>
         public bool IsLastPage
         {
             get { return (bool)GetValue(IsLastPageProperty); }
@@ -312,6 +407,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("IsLastPage", typeof (bool), typeof (Wizard),
                                                 new UIPropertyMetadata(true));
 
+        /// <summary>
+        /// Identifies <see cref="IsLastPage"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsLastPageProperty =
             IsLastPagePropertyKey.DependencyProperty;
 
@@ -319,12 +417,18 @@ namespace AvalonWizard
 
         #region [WizardStyle]
 
+        /// <summary>
+        /// Gets or sets the current <see cref="WizardStyle"/>.
+        /// </summary>
         public WizardStyle WizardStyle
         {
             get { return (WizardStyle)GetValue(WizardStyleProperty); }
             set { SetValue(WizardStyleProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies <see cref="WizardStyle"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty WizardStyleProperty =
             DependencyProperty.Register("WizardStyle", typeof(WizardStyle), typeof(Wizard), 
                 new UIPropertyMetadata(WizardStyle.Auto, OnWizardStyleChanged));
@@ -343,6 +447,19 @@ namespace AvalonWizard
 
         #region [EffectiveWizardStyle]
 
+        /// <summary>
+        /// Gets the effective wizard style.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If the <see cref="Wizard.WizardStyle"/> is set to <see cref="AvalonWizard.WizardStyle.Auto"/>
+        /// then the effective value is <see cref="AvalonWizard.WizardStyle.Wizard97"/> on Windows XP and Windows 2003 Server,
+        /// and <see cref="AvalonWizard.WizardStyle.Aero"/> on Windows Vista or higher.
+        /// </para>
+        /// <para>
+        /// Otherwise the effective value is equal to <see cref="Wizard.WizardStyle"/>.
+        /// </para>
+        /// </remarks>
         public WizardStyle EffectiveWizardStyle
         {
             get { return (WizardStyle)GetValue(EffectiveWizardStyleProperty); }
@@ -353,6 +470,9 @@ namespace AvalonWizard
             DependencyProperty.RegisterReadOnly("EffectiveWizardStyle", typeof (WizardStyle), typeof (Wizard),
                                                 new UIPropertyMetadata(WizardStyle.Auto));
 
+        /// <summary>
+        /// Identifies <see cref="EffectiveWizardStyle"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty EffectiveWizardStyleProperty =
             EffectiveWizardStylePropertyKey.DependencyProperty;
 
@@ -362,6 +482,9 @@ namespace AvalonWizard
 
         #region [Public Properties]
 
+        /// <summary>
+        /// Gets the list of wizard pages.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Bindable(true)]
         public WizardPageCollection Pages
         {
@@ -371,6 +494,10 @@ namespace AvalonWizard
             }
         }
 
+        /// <summary>
+        /// Gets or sets the navigation strategy.
+        /// </summary>
+        /// <seealso cref="INavigationStrategy"/>
         public INavigationStrategy NavigationStrategy
         {
             get
@@ -389,9 +516,15 @@ namespace AvalonWizard
 
         #region [Finished Event]
 
+        /// <summary>
+        /// Identifies <see cref="Finished"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent FinishedEvent = EventManager.RegisterRoutedEvent(
             "Finished", RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (Wizard));
 
+        /// <summary>
+        /// Raised when the wizard is successfully finished.
+        /// </summary>
         public event RoutedEventHandler Finished
         {
             add { AddHandler(FinishedEvent, value); }
@@ -402,9 +535,15 @@ namespace AvalonWizard
 
         #region [Cancelled Event]
 
+        /// <summary>
+        /// Identifies <see cref="Cancelled"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent CancelledEvent = EventManager.RegisterRoutedEvent(
             "Cancelled", RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (Wizard));
 
+        /// <summary>
+        /// Raised when the wizard is cancelled.
+        /// </summary>
         public event RoutedEventHandler Cancelled
         {
             add { AddHandler(CancelledEvent, value); }
@@ -415,9 +554,15 @@ namespace AvalonWizard
 
         #region [CurrentPageChanged Event]
 
+        /// <summary>
+        /// Identifies <see cref="CurrentPageChanged"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent CurrentPageChangedEvent = EventManager.RegisterRoutedEvent(
             "CurrentPageChanged", RoutingStrategy.Bubble, typeof (EventHandler<CurrentPageChangedEventArgs>), typeof (Wizard));
 
+        /// <summary>
+        /// Raised when the current page is changed.
+        /// </summary>
         public event EventHandler<CurrentPageChangedEventArgs> CurrentPageChanged
         {
             add { AddHandler(CurrentPageChangedEvent, value); }
@@ -430,18 +575,27 @@ namespace AvalonWizard
 
         #region [Protected Methods]
 
+        /// <summary>
+        /// Invoked when the wizard is successfully finished.
+        /// </summary>
         protected virtual void OnFinished(RoutedEventArgs args)
         {
             args.RoutedEvent = FinishedEvent;
             RaiseEvent(args);
         }
 
+        /// <summary>
+        /// Invoked when the wizard is cancelled.
+        /// </summary>
         protected virtual void OnCancelled(RoutedEventArgs args)
         {
             args.RoutedEvent = CancelledEvent;
             RaiseEvent(args);
         }
 
+        /// <summary>
+        /// Invoked when the current page is changed.
+        /// </summary>
         protected virtual void OnCurrentPageChanged(CurrentPageChangedEventArgs args)
         {
             args.RoutedEvent = CurrentPageChangedEvent;
@@ -483,6 +637,11 @@ namespace AvalonWizard
                 {
                     wizard.NextPage((WizardPage)e.Parameter);
                 }
+                else if (e.Parameter is String &&
+                         wizard.Pages.Any(page => page.Name == (String)e.Parameter))
+                {
+                    wizard.NextPageByName((String)e.Parameter);
+                }
                 else
                 {
                     var converter = TypeDescriptor.GetConverter(typeof(int));
@@ -508,7 +667,12 @@ namespace AvalonWizard
                 {
                     if (e.Parameter is WizardPage)
                     {
-                        e.CanExecute &= wizard.Pages.Contains((WizardPage)e.Parameter);
+                        e.CanExecute = wizard.Pages.Contains((WizardPage)e.Parameter);
+                    }
+                    else if (e.Parameter is String &&
+                             wizard.Pages.Any(page => page.Name == (String)e.Parameter))
+                    {
+                        e.CanExecute = true;
                     }
                     else
                     {
@@ -516,7 +680,7 @@ namespace AvalonWizard
                         if (converter.CanConvertFrom(e.Parameter.GetType()))
                         {
                             int index = (int)converter.ConvertFrom(e.Parameter);
-                            e.CanExecute &= (index >= 0 && index < wizard.Pages.Count);
+                            e.CanExecute = (index >= 0 && index < wizard.Pages.Count);
                         }
                         else
                         {
@@ -627,6 +791,14 @@ namespace AvalonWizard
             }
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (CurrentPage != null)
+            {
+                CurrentPage.InitializePage(null);
+            }
+        }
+
         #endregion [Private Methods]
 
         #region [Private Fields]
@@ -645,6 +817,7 @@ namespace AvalonWizard
         /// Adds a child object. 
         /// </summary>
         /// <param name="value">The child object to add.</param>
+        /// <exception cref="ArgumentException">The argument is not a <see cref="WizardPage"/>.</exception>
         void IAddChild.AddChild(object value)
         {
             var page = value as WizardPage;
@@ -658,6 +831,8 @@ namespace AvalonWizard
         /// Adds the text content of a node to the object. 
         /// </summary>
         /// <param name="text">The text to add to the object.</param>
+        /// <remarks>The method is not implemented and will throw <see cref="NotImplementedException"/>.</remarks>
+        /// <exception cref="NotImplementedException">Always.</exception>
         void IAddChild.AddText(string text)
         {
             throw new NotImplementedException();

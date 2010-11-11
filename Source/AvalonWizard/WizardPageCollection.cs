@@ -6,6 +6,9 @@ using System.Text;
 
 namespace AvalonWizard
 {
+    /// <summary>
+    /// The collection of wizard's pages.
+    /// </summary>
     public class WizardPageCollection : ObservableCollection<WizardPage>
     {
     }
