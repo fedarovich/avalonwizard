@@ -20,13 +20,13 @@ using System.Linq;
 namespace AvalonWizard
 {
     /// <summary>
-    /// <para>The default implementation of <see cref="INavigationStrategy"/>.</para>
-    /// <para>
+    /// The default implementation of <see cref="INavigationStrategy"/>.
+    /// </summary>
+    /// <remarks>
     /// This implementation uses the <see cref="WizardPage.NextPage"/> property of the <see cref="Wizard.CurrentPage"/> 
     /// as the next page. If the value of the property is <c>null</c> it uses the next page 
     /// in the <see cref="Wizard.Pages"/> collection.
-    /// </para>
-    /// </summary>
+    /// </remarks>
     public class DefaultNavigationStrategy : INavigationStrategy
     {
         #region Implementation of INavigationStrategy
