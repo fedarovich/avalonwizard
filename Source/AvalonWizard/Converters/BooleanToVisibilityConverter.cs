@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace AvalonWizard.Converters
 {
+    /// <summary>
+    /// Converts <see cref="Boolean"/> to <see cref="Visibility"/>.
+    /// </summary>
     public class BooleanToVisibilityConverter : IValueConverter
     {
         #region Implementation of IValueConverter
@@ -18,11 +21,33 @@ namespace AvalonWizard.Converters
         /// <returns>
         /// A converted value. If the method returns null, the valid null value is used.
         /// </returns>
-        /// <param name="value">The value produced by the binding source.
-        /// </param><param name="targetType">The type of the binding target property.
-        /// </param><param name="parameter">The converter parameter to use.
-        /// </param><param name="culture">The culture to use in the converter.
-        /// </param>
+        /// <param name="value">The value produced by the binding source.</param>
+        /// <param name="targetType">The type of the binding target property.</param>
+        /// <param name="parameter">The converter parameter to use. See remarks for the supported values.</param>
+        /// <param name="culture">The culture to use in the converter.</param>
+        /// <remarks>
+        /// <para>
+        /// The default behavior results in <see cref="Visibility.Visible"/> if the passed values is <c>true</c>
+        /// and to <see cref="Visibility.Collapsed"/> otherwise. 
+        /// This behavior may be changed by <paramref name="parameter"/>.
+        /// </para>
+        /// <para>The parameter argument can be one of the following values:</para>
+        /// <list type="table">
+        ///     <listheader>
+        ///         <term>Value</term>
+        ///         <description>Description</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>INVERT</term>
+        ///         <description>Inverts the value.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>HIDE</term>
+        ///         <description>Convert <c>false</c> to <c>Visibility.Hidden</c> instead of <c>Visibility.Collapsed</c>.</description>
+        ///     </item>
+        /// </list>
+        /// <para>You may use both values, separated by comma.</para>
+        /// </remarks>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool invert = false;

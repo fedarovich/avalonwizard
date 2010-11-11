@@ -5,8 +5,14 @@ using System.Text;
 
 namespace AvalonWizard.Aero
 {
+    /// <summary>
+    /// Gets the information about Desktop Window Manager.
+    /// </summary>
     public static class DesktopWindowManager
     {
+        /// <summary>
+        /// Gets the value indicating whether DWM composition is enabled.
+        /// </summary>
         public static bool IsCompositionEnabled
         {
             get
@@ -15,6 +21,11 @@ namespace AvalonWizard.Aero
             }
         }
 
+        /// <summary>
+        /// Gets the value indicating whether the Desktop Window Manager is available on the operating system.
+        /// Returns <c>true</c> for Windows Vista and higher. 
+        /// Returns <c>false</c> for Windows XP and Windows 2003 Server.
+        /// </summary>
         public static bool IsSupported
         {
             get

@@ -5,8 +5,16 @@ using System.Text;
 
 namespace AvalonWizard
 {
+    /// <summary>
+    /// Wizard's navigation strategy allows to implement the custom way to select the next page.
+    /// </summary>
     public interface INavigationStrategy
     {
-        WizardPage GetNextPage(Wizard wizard, WizardPage currentPage);
+        /// <summary>
+        /// Gets the next page to go.
+        /// </summary>
+        /// <param name="wizard">Wizard instance.</param>
+        /// <returns>The next page.</returns>
+        WizardPage GetNextPage(Wizard wizard);
     }
 }

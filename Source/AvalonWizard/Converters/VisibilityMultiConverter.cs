@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace AvalonWizard.Converters
 {
+    /// <summary>
+    /// Converts multiply <see cref="Visibility"/> values to a single one.
+    /// </summary>
     public class VisibilityMultiConverter : IMultiValueConverter
     {
         #region Implementation of IMultiValueConverter
@@ -21,11 +24,33 @@ namespace AvalonWizard.Converters
         /// A return value of <see cref="T:System.Windows.DependencyProperty"/>.<see cref="F:System.Windows.DependencyProperty.UnsetValue"/> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue"/> if it is available, or else will use the default value.
         /// A return value of <see cref="T:System.Windows.Data.Binding"/>.<see cref="F:System.Windows.Data.Binding.DoNothing"/> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue"/> or the default value.
         /// </returns>
-        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding"/> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue"/> indicates that the source binding has no value to provide for conversion.
-        /// </param><param name="targetType">The type of the binding target property.
-        /// </param><param name="parameter">The converter parameter to use.
-        /// </param><param name="culture">The culture to use in the converter.
-        /// </param>
+        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding"/> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue"/> indicates that the source binding has no value to provide for conversion.</param>
+        /// <param name="targetType">The type of the binding target property.</param>
+        /// <param name="parameter">The converter parameter to use. See remark for more info.</param>
+        /// <param name="culture">The culture to use in the converter.</param>
+        /// <remarks>
+        /// <para>
+        /// The default behavior results in <see cref="Visibility.Visible"/> if ALL passed values are
+        /// <see cref="Visibility.Visible"/> and to <see cref="Visibility.Collapsed"/> otherwise. 
+        /// This behavior may be changed by <paramref name="parameter"/>.
+        /// </para>
+        /// <para>The parameter argument can be one of the following values:</para>
+        /// <list type="table">
+        ///     <listheader>
+        ///         <term>Value</term>
+        ///         <description>Description</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>ANY</term>
+        ///         <description>The result is <see cref="Visibility.Visible"/> if ANY of the passed values is <see cref="Visibility.Visible"/>.</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>HIDE</term>
+        ///         <description>Convert <c>false</c> to <c>Visibility.Hidden</c> instead of <c>Visibility.Collapsed</c>.</description>
+        ///     </item>
+        /// </list>
+        /// <para>You may use both values, separated by comma.</para>
+        /// </remarks>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             try

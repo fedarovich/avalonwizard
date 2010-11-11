@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 
 namespace AvalonWizard.Aero
 {
+    /// <summary>
+    /// Provides borders and background color for <see cref="WizardPage"/> when Aero Wizard style is set.
+    /// </summary>
     public class AeroWizardPageChrome : ContentControl
     {
         static AeroWizardPageChrome()

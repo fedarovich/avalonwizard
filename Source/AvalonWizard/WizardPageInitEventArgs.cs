@@ -7,24 +7,33 @@ using System.Windows;
 namespace AvalonWizard
 {
     /// <summary>
-    /// Arguments supplied to the <see cref = "WizardPage.Initialize" /> event.
+    /// Provides data for the <see cref = "WizardPage.Initialize" /> event.
     /// </summary>
     public class WizardPageInitEventArgs : RoutedEventArgs
     {
-        internal WizardPageInitEventArgs(WizardPage page, WizardPage prevPage)
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="page">
+        /// The <see cref="WizardPage" /> that has raised the event.
+        /// </param>
+        /// <param name="previousPage">
+        /// The <see cref="WizardPage" /> that was previously selected when the event was raised.
+        /// </param>
+        internal WizardPageInitEventArgs(WizardPage page, WizardPage previousPage)
         {
             Page = page;
-            PreviousPage = prevPage;
+            PreviousPage = previousPage;
         }
 
         /// <summary>
-        /// Gets the <see cref = "WizardPage" /> that has raised the event.
+        /// Gets the <see cref="WizardPage" /> that has raised the event.
         /// </summary>
         /// <value>The wizard page.</value>
         public WizardPage Page { get; private set; }
 
         /// <summary>
-        ///   Gets the <see cref = "WizardPage" /> that was previously selected when the event was raised.
+        /// Gets the <see cref="WizardPage" /> that was previously selected when the event was raised.
         /// </summary>
         /// <value>The previous wizard page.</value>
         public WizardPage PreviousPage { get; private set; }

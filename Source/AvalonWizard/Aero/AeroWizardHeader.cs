@@ -18,8 +18,14 @@ using AvalonWizard.Extensions;
 
 namespace AvalonWizard.Aero
 {
+    /// <summary>
+    /// Represent wizard's header in Aero Wizard style.
+    /// </summary>
     public class AeroWizardHeader : Control
     {
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
         public AeroWizardHeader()
         {
             Loaded += OnLoaded;
@@ -33,6 +39,9 @@ namespace AvalonWizard.Aero
 
         #region [IsCompositionEnabled]
 
+        /// <summary>
+        /// Gets the value indicating whether DWM composition is enabled.
+        /// </summary>
         public bool IsCompositionEnabled
         {
             get { return (bool)GetValue(IsCompositionEnabledProperty); }
@@ -43,6 +52,9 @@ namespace AvalonWizard.Aero
             DependencyProperty.RegisterReadOnly("IsCompositionEnabled", typeof(bool), typeof(AeroWizardHeader),
                                                 new UIPropertyMetadata(false));
 
+        /// <summary>
+        /// Identifies <see cref="IsCompositionEnabled"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsCompositionEnabledProperty =
             IsCompositionEnabledPropertyKey.DependencyProperty;       
 
@@ -50,6 +62,9 @@ namespace AvalonWizard.Aero
 
         #region [IsActive]
 
+        /// <summary>
+        /// Gets the value indicating whether the wizard window is active.
+        /// </summary>
         public bool IsActive
         {
             get { return (bool)GetValue(IsActiveProperty); }
@@ -60,6 +75,9 @@ namespace AvalonWizard.Aero
             DependencyProperty.RegisterReadOnly("IsActive", typeof (bool), typeof (AeroWizardHeader),
                                                 new UIPropertyMetadata(true));
 
+        /// <summary>
+        /// Identifies <see cref="IsActive"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsActiveProperty =
             IsActivePropertyKey.DependencyProperty;
 
