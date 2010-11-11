@@ -37,9 +37,11 @@ using AvalonWizard.Extensions;
 namespace AvalonWizard
 {
     /// <summary>
-    /// <para>Wizard Control for Windows Presentation foundation.</para>
-    /// <para>The wizard supports two styles: the legacy Wizard 97 and the modern Aero Wizard.</para>
+    /// Wizard Control for Windows Presentation foundation.
     /// </summary>
+    /// <remarks>
+    /// The wizard supports two styles: the legacy Wizard 97 and the modern Aero Wizard.
+    /// </remarks>
     [DefaultProperty("Pages")]
     [ContentProperty("Pages")]
     public class Wizard : Control, IAddChild
