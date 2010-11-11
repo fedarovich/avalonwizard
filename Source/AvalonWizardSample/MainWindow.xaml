@@ -85,7 +85,10 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
             <aw:WizardPage Header="Page 3: Next Page Selection">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                     <TextBlock Margin="0,2">Next Page:</TextBlock>
-                    <ComboBox Name="cmbNextPage" DisplayMemberPath="Header" IsEditable="True" IsReadOnly="True" Margin="10,0" HorizontalAlignment="Stretch" MinWidth="200" SelectedIndex="0" SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=NextPage, Mode=OneWayToSource}">
+                    <ComboBox Name="cmbNextPage" Margin="10,0" HorizontalAlignment="Stretch" MinWidth="200" SelectedIndex="0" SelectionChanged="OnNextPageChanged">
+                        <ComboBoxItem>Page 4: Action Buttons</ComboBoxItem>
+                        <ComboBoxItem>Page 5: Custom Header Template</ComboBoxItem>
+                        <ComboBoxItem>Page 6: Finish Page</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
             </aw:WizardPage>
