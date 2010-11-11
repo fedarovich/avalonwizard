@@ -1,14 +1,28 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:AvalonWizard"
-    xmlns:conv="clr-namespace:AvalonWizard.Converters" 
+﻿<!--
+This file is part of AvalonWizard.
+
+AvalonWizard is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 2.1 of the License, or
+(at your option) any later version.
+
+AvalonWizard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.    
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:aero="clr-namespace:AvalonWizard.Aero">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="AvalonWizard;component/Themes/AeroWizardHeader.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style TargetType="aero:AeroWizardHeader">
         <Setter Property="Template" Value="{StaticResource AeroWizardHeader_ControlTemplate}" />
         <Setter Property="Background" Value="Transparent" />
@@ -39,14 +53,11 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0"
-                            Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                            BorderBrush="Transparent"
-                            BorderThickness="0">
+                        <Border Grid.Row="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="Transparent" BorderThickness="0">
                             <ContentPresenter />
                         </Border>
-                        <Separator Grid.Row="1" Margin="0"/>
-                    </Grid>                   
+                        <Separator Grid.Row="1" Margin="0" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
