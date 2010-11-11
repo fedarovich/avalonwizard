@@ -1,9 +1,26 @@
-﻿<Window x:Class="AvalonWizardSample.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:aw="clr-namespace:AvalonWizard;assembly=AvalonWizard"
-        Icon="wizard.ico" Title="Avalon Wizard Sample"
-        Height="350" Width="525" Left="100" Top="100">
+﻿<!--
+This file is part of AvalonWizard.
+
+AvalonWizard is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 2.1 of the License, or
+(at your option) any later version.
+
+AvalonWizard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.    
+-->
+<Window 
+    x:Class="AvalonWizardSample.MainWindow" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:aw="clr-namespace:AvalonWizard;assembly=AvalonWizard" 
+    Icon="wizard.ico" Title="Avalon Wizard Sample" 
+    Height="350" Width="525" Left="100" Top="100">
     <Grid>
         <aw:Wizard Name="wizard">
             <aw:Wizard.Resources>
@@ -11,9 +28,7 @@
                     <Setter Property="Padding" Value="14" />
                 </Style>
             </aw:Wizard.Resources>
-            <aw:WizardPage Header="Page 1: My Title" 
-                           aw:Wizard97.Subtitle="My Subtitle"
-                           aw:Wizard97.Icon="Wizard.png">
+            <aw:WizardPage Header="Page 1: My Title" aw:Wizard97.Subtitle="My Subtitle" aw:Wizard97.Icon="Wizard.png">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="TextBlock">
@@ -28,18 +43,17 @@
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0">Theme</TextBlock>
-                    <ComboBox Name="cmbWizardStyle" Grid.Row="0" Grid.Column="1" SelectedIndex="0"
-                              SelectedValue="{Binding RelativeSource={RelativeSource AncestorType=aw:Wizard}, Path=WizardStyle, Mode=TwoWay}">
+                    <ComboBox Name="cmbWizardStyle" Grid.Row="0" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType=aw:Wizard}, Path=WizardStyle, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="aw:WizardStyle">
                                 <TextBlock Text="{Binding}" />
@@ -47,44 +61,31 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock Grid.Row="1" Grid.Column="0">Wizard Title</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" 
-                             Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, 
-                                Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, 
+                                Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Grid.Row="2" Grid.Column="0">Page Title</TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" 
-                             Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
-                                Path=Header, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
+                                Path=Header, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Grid.Row="3" Grid.Column="0">Page Subtitle</TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" 
-                             Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
-                                 Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
+                                 Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </aw:WizardPage>
             <aw:WizardPage Header="Page 2: Page Properties">
-                <StackPanel Margin="5">      
-                    <CheckBox Content="IsFinishPage"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=IsFinishPage}"/>
-                    <CheckBox Content="AllowCancel"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowCancel}"/>
-                    <CheckBox Content="AllowNext"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowNext}"/>
-                    <CheckBox Content="AllowBack"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowBack}"/>
-                    <CheckBox Content="ShowCancel"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowCancel}"/>
-                    <CheckBox Content="ShowNext"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowNext}"/>
-                    <CheckBox Content="ShowBack"
-                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowBack}"/>
+                <StackPanel Margin="5">
+                    <CheckBox Content="IsFinishPage" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=IsFinishPage}" />
+                    <CheckBox Content="AllowCancel" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowCancel}" />
+                    <CheckBox Content="AllowNext" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowNext}" />
+                    <CheckBox Content="AllowBack" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=AllowBack}" />
+                    <CheckBox Content="ShowCancel" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowCancel}" />
+                    <CheckBox Content="ShowNext" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowNext}" />
+                    <CheckBox Content="ShowBack" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=ShowBack}" />
                 </StackPanel>
             </aw:WizardPage>
             <aw:WizardPage Header="Page 3: Next Page Selection">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                     <TextBlock Margin="0,2">Next Page:</TextBlock>
-                    <ComboBox Name="cmbNextPage" DisplayMemberPath="Header" IsEditable="True" IsReadOnly="True"
-                              Margin="10,0" HorizontalAlignment="Stretch" MinWidth="200"
-                              SelectedIndex="0"
-                              SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=NextPage, Mode=OneWayToSource}">
+                    <ComboBox Name="cmbNextPage" DisplayMemberPath="Header" IsEditable="True" IsReadOnly="True" Margin="10,0" HorizontalAlignment="Stretch" MinWidth="200" SelectedIndex="0" SelectedItem="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, Path=NextPage, Mode=OneWayToSource}">
                     </ComboBox>
                 </StackPanel>
             </aw:WizardPage>
@@ -101,15 +102,13 @@
                 <aw:WizardPage.HeaderTemplate>
                     <DataTemplate DataType="String">
                         <Grid Height="60">
-                            <Ellipse Fill="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="50, 5"/>
-                            <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       Foreground="White" FontSize="14" FontWeight="Bold"/>
+                            <Ellipse Fill="Red" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="50, 5" />
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold" />
                         </Grid>
                     </DataTemplate>
                 </aw:WizardPage.HeaderTemplate>
             </aw:WizardPage>
-            <aw:WizardPage Header="Page 6: Finish Page">
-            </aw:WizardPage>
+            <aw:WizardPage Header="Page 6: Finish Page"></aw:WizardPage>
         </aw:Wizard>
     </Grid>
 </Window>
