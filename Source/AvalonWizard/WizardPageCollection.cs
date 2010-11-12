@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace AvalonWizard
 {
@@ -27,5 +28,55 @@ namespace AvalonWizard
     /// </summary>
     public class WizardPageCollection : ObservableCollection<WizardPage>
     {
+        internal WizardPageCollection(Wizard wizard)
+        {
+            this.wizard = wizard;
+        }
+
+        protected override void InsertItem(int index, WizardPage item)
+        {
+            if (item.Wizard != null)
+            {
+                throw new InvalidOperationException();
+            }
+            item.Wizard = wizard;
+            base.InsertItem(index, item);
+        }
+
+        protected override void RemoveItem(int index)
+        {
+            if (index >= 0 && index < Items.Count)
+            {
+                var item = Items[index];
+                item.Wizard = null;
+            } 
+            base.RemoveItem(index);
+        }
+
+        protected override void ClearItems()
+        {
+            foreach (var item in Items)
+            {
+                item.Wizard = null;
+            }
+            base.ClearItems();
+        }
+
+        protected override void SetItem(int index, WizardPage item)
+        {
+            if (item.Wizard != null)
+            {
+                throw new InvalidOperationException();
+            }
+            if (index >= 0 && index < Items.Count)
+            {
+                var oldItem = Items[index];
+                oldItem.Wizard = null;
+                item.Wizard = wizard;
+            } 
+            base.SetItem(index, item);
+        }
+
+        private Wizard wizard;
     }
 }

@@ -32,7 +32,7 @@ using System.Windows.Shapes;
 namespace AvalonWizard
 {
     /// <summary>
-    /// The page of <see cref="Wizard"/> control.
+    /// The page of <see cref="AvalonWizard.Wizard"/> control.
     /// </summary>
     public class WizardPage : HeaderedContentControl
     {
@@ -44,25 +44,23 @@ namespace AvalonWizard
         #region [Properties]
 
         /// <summary>
-        /// Gets the <see cref = "Wizard" /> for this page.
+        /// Gets the <see cref = "AvalonWizard.Wizard" /> owing this page.
         /// </summary>
         [Browsable(false)]
-        public Wizard Owner
+        public Wizard Wizard
         {
-            get
-            {
-                return LogicalTreeHelper.GetParent(this) as Wizard;
-            }
+            get;
+            internal set;
         }
 
         /// <summary>
         /// <para>
         /// Gets or sets the next page that should be used when the user clicks the Next button 
-        /// or when the <see cref = "Wizard.NextPage()" /> method is called. 
+        /// or when the <see cref = "AvalonWizard.Wizard.NextPage()" /> method is called. 
         /// </para>
         /// <para>
         /// This is used to override the default behavior of going to the next page 
-        /// in the sequence defined within the <see cref = "Wizard.Pages" /> collection.
+        /// in the sequence defined within the <see cref = "AvalonWizard.Wizard.Pages" /> collection.
         /// </para>
         /// </summary>
         /// <value>The wizard page to go to.</value>
