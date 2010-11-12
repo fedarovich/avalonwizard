@@ -53,7 +53,7 @@ namespace AvalonWizard
         /// </summary>
         public Wizard()
         {
-            pages = new WizardPageCollection();
+            pages = new WizardPageCollection(this);
             pages.CollectionChanged += HandlePagesCollectionChanged;
 
             Loaded += OnLoaded;
