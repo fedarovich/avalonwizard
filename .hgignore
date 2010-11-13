@@ -3,3 +3,4 @@ glob:obj
 glob:bin
 glob:*.suo
 glob:*.user
+glob:Builds

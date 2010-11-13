@@ -144,13 +144,15 @@ namespace AvalonWizard.Aero
                     orinalWindowBackground = ParentWindow.Background;
                     ParentWindow.Background = Brushes.Transparent;
                     HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                    Matrix dpiMatrix = HwndSource.CompositionTarget.TransformToDevice;
+                    double dpiY = dpiMatrix.M22;
 
                     // Create a margin structure
                     var margins = new WinApi.Margins
                                       {
                                           Left = 0,
                                           Right = 0,
-                                          Top = (int)this.ActualHeight,
+                                          Top = (int)Math.Round(this.ActualHeight * dpiY, MidpointRounding.AwayFromZero),
                                           Bottom = 0
                                       };
 
