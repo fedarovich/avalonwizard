@@ -160,6 +160,25 @@ namespace AvalonWizard
 
         #endregion [AllowBack Property]
 
+        #region [AllowFinish Property]
+
+        /// <summary>
+        /// Gets or sets the value indicating whether the Finish button is enabled on this page.
+        /// </summary>
+        public bool AllowFinish
+        {
+            get { return (bool)GetValue(AllowFinsihProperty); }
+            set { SetValue(AllowFinsihProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="AllowFinish"/> property.
+        /// </summary>
+        public static readonly DependencyProperty AllowFinsihProperty =
+            DependencyProperty.Register("AllowFinish", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+
+        #endregion
+
         #region [ShowCancel Property]
 
         /// <summary>

@@ -723,7 +723,8 @@ namespace AvalonWizard
             var wizard = sender as Wizard;
             if (wizard != null)
             {
-                e.CanExecute = wizard.IsLastPage;
+                e.CanExecute = wizard.IsLastPage && 
+                    (wizard.CurrentPage == null || wizard.CurrentPage.AllowFinish);
             }
         }
 
