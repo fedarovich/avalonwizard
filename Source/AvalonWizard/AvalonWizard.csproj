@@ -46,6 +46,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Include\ProductInfo.cs">
+      <Link>Properties\ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="Aero\AeroWizardHeader.cs" />
     <Compile Include="Aero\AeroWizardPageChrome.cs" />
     <Compile Include="Aero\DesktopWindowManager.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="INavigationStrategy.cs" />
     <Compile Include="Wizard97.cs" />
     <Compile Include="WizardCommands.cs" />
+    <Compile Include="Designer.cs" />
     <Compile Include="WizardPage.cs" />
     <Compile Include="WizardPageCollection.cs" />
     <Compile Include="WizardPageConfirmEventArgs.cs" />

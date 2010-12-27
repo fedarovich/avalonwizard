@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalonWizard", "AvalonWizar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalonWizardSample", "AvalonWizardSample\AvalonWizardSample.csproj", "{48A037FC-EB3C-4A76-A132-C0D9235A372E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalonWizard.Design", "AvalonWizard.Design\AvalonWizard.Design.csproj", "{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{48A037FC-EB3C-4A76-A132-C0D9235A372E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{48A037FC-EB3C-4A76-A132-C0D9235A372E}.Release|x86.ActiveCfg = Release|x86
 		{48A037FC-EB3C-4A76-A132-C0D9235A372E}.Release|x86.Build.0 = Release|x86
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0EB3EBCB-A998-4DEA-A78D-C15AE28AC068}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

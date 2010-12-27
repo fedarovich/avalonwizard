@@ -99,6 +99,5 @@ namespace AvalonWizardSample
         }
 
         private readonly EventLogWindow logWindow;
-
     }
 }

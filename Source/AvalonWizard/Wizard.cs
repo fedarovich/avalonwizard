@@ -125,7 +125,10 @@ namespace AvalonWizard
 
             if (CurrentPage == null || CurrentPage.CommitPage())
             {
-                pageHistory.Push(CurrentPage);
+                if (!DesignerProperties.GetIsInDesignMode(this))
+                {
+                    pageHistory.Push(CurrentPage);
+                }
                 CurrentPage = nextPage ?? strategy.GetNextPage(this);
             }
         }
@@ -142,7 +145,7 @@ namespace AvalonWizard
             var page = Pages.First(p => p.Name == pageName);
             if (page == null)
             {
-                throw new ArgumentException("Page with the specified name is not found", "pageName");
+                throw new ArgumentException("Page with the specified name is not found.", "pageName");
             }
             NextPage(page);
         }
@@ -154,6 +157,10 @@ namespace AvalonWizard
         /// <exception cref="IndexOutOfRangeException">Page index is out of range.</exception>
         public virtual void NextPageByIndex(int pageIndex)
         {
+            if (DesignerProperties.GetIsInDesignMode(this) && (pageIndex < 0 || pageIndex >= Pages.Count))
+            {
+                return;
+            }
             NextPage(Pages[pageIndex]);
         }
 
@@ -759,6 +766,11 @@ namespace AvalonWizard
             else if (CurrentPage == null)
             {
                 CurrentPage = Pages.FirstOrDefault();
+            }
+            else
+            {
+                int index = Math.Min(CurrentPageIndex, Pages.Count);
+                CurrentPage = index >= 0 ? Pages[index] : null;
             }
 
             HasPages = Pages.Count > 0;

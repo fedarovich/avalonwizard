@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\Include\ProductInfo.cs">
+      <Link>Properties\ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -99,12 +102,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AvalonWizard\AvalonWizard.csproj">
-      <Project>{7AD7E729-2FB0-4452-9889-21F9FD41FBB7}</Project>
-      <Name>AvalonWizard</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Wizard.png" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +116,12 @@
     <Content Include="COPYING.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AvalonWizard\AvalonWizard.csproj">
+      <Project>{7AD7E729-2FB0-4452-9889-21F9FD41FBB7}</Project>
+      <Name>AvalonWizard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
