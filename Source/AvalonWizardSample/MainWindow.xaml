@@ -22,7 +22,7 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
     Icon="wizard.ico" Title="Avalon Wizard Sample" 
     Height="350" Width="525" Left="100" Top="100">
     <Grid>
-        <aw:Wizard Name="wizard">
+        <aw:Wizard Name="wizard" aw:Designer.PageIndex="0">
             <aw:Wizard.Resources>
                 <Style TargetType="aw:WizardPage">
                     <Setter Property="Padding" Value="14" />
@@ -93,6 +93,7 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                     </ComboBox>
                 </StackPanel>
             </aw:WizardPage>
+            <aw:WizardPage />
             <aw:WizardPage Header="Page 4: Action Buttons">
                 <StackPanel>
                     <Button Margin="20,5" Command="{x:Static aw:WizardCommands.NextPage}">

@@ -42,7 +42,12 @@ namespace AvalonWizard
         /// <seealso cref="SetPageIndex"/>
         public static readonly DependencyProperty PageIndexProperty =
             DependencyProperty.RegisterAttached("PageIndex", typeof(int), typeof(Designer), 
-                new UIPropertyMetadata(0, OnPageIndexChanged, OnCoercePageIndex));
+                new UIPropertyMetadata(0, OnPageIndexChanged, OnCoercePageIndex), OnValidatePageIndex);
+
+        private static bool OnValidatePageIndex(object value)
+        {
+            return (int)value >= -1;
+        }
 
         private static object OnCoercePageIndex(DependencyObject d, object baseValue)
         {
@@ -53,9 +58,9 @@ namespace AvalonWizard
             }
 
             int index = (int)baseValue;
-            if (index < 0)
+            if (index < -1)
             {
-                return 0;
+                return -1;
             }
             if (index >= wizard.Pages.Count)
             {
