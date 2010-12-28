@@ -31,5 +31,13 @@ namespace AvalonWizard.Design
                                         imageName);
             return new Uri(path, UriKind.Relative);
         }
+
+        internal static Uri GetEffectUri(String effectName)
+        {
+            String path = String.Format("{0};component/Effects/{1}",
+                                        Assembly.GetExecutingAssembly().GetName().Name,
+                                        effectName);
+            return new Uri(path, UriKind.Relative);
+        }
     }
 }

@@ -159,6 +159,7 @@ namespace AvalonWizard
         {
             if (DesignerProperties.GetIsInDesignMode(this) && (pageIndex < 0 || pageIndex >= Pages.Count))
             {
+                CurrentPage = null;
                 return;
             }
             NextPage(Pages[pageIndex]);
@@ -765,7 +766,14 @@ namespace AvalonWizard
             }
             else if (CurrentPage == null)
             {
-                CurrentPage = Pages.FirstOrDefault();
+                if (DesignerProperties.GetIsInDesignMode(this))
+                {
+                    NextPageByIndex(Designer.GetPageIndex(this));
+                }
+                else
+                {
+                    CurrentPage = Pages.FirstOrDefault();
+                }
             }
             else
             {

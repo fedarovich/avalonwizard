@@ -109,6 +109,11 @@ namespace AvalonWizard.Design
 
         internal static void InsertPage(ModelItem wizard)
         {
+            if (wizard.Content.Collection.Count == 0)
+            {
+                AddPage(wizard);
+                return;
+            }
             using (ModelEditingScope changes = wizard.BeginEdit(Resources.InsertPageText))
             {
                 ModelItem newPage = ModelFactory.CreateItem(
@@ -116,16 +121,8 @@ namespace AvalonWizard.Design
                     Types.WizardPage.TypeId,
                     CreateOptions.None);
 
-                var currentPageIndex = (int)wizard.Properties[Types.Designer.PageIndexProperty].ComputedValue;
-                if (currentPageIndex < 0)
-                {
-                    wizard.Content.Collection.Add(newPage);
-                }
-                else
-                {
-                    wizard.Content.Collection.Insert(currentPageIndex, newPage);
-                }
-                wizard.Properties[Types.Designer.PageIndexProperty].SetValue(currentPageIndex);
+                int currentPageIndex = (int)wizard.Properties[Types.Designer.PageIndexProperty].ComputedValue;
+                wizard.Content.Collection.Insert(currentPageIndex, newPage);
                 changes.Complete();
             }
         }
