@@ -73,6 +73,7 @@ Copyright © Pavel Fedarovich, 2010-2011
                                Action="createAndRemoveOnUninstall">
                     <RegistryValue Action="write"
                                    Type="string"
+                                   Key="TabName"
                                    Value="Avalon Wizard 1.1" />
                   </RegistryKey>
                 </RegistryKey>
@@ -109,6 +110,7 @@ Copyright © Pavel Fedarovich, 2010-2011
                                Action="createAndRemoveOnUninstall">
                     <RegistryValue Action="write"
                                    Type="string"
+                                   Key="TabName"
                                    Value="Avalon Wizard 1.1" />
                   </RegistryKey>
                 </RegistryKey>
