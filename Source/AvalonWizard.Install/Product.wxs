@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is part of AvalonWizard.
+
+AvalonWizard is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 2.1 of the License, or
+(at your option) any later version.
+
+AvalonWizard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.  
+
+Copyright © Pavel Fedarovich, 2010-2011
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="0c3d6872-89e7-4d21-8f78-4f9c6b83ab59" Name="Avalon Wizard 1.1"
+           Language="1033" Version="1.1.0.0" Manufacturer="Pavel Fedarovich"
+           UpgradeCode="67471959-dd24-4fa5-97cb-d382863ec4e5">
+    <Package InstallerVersion="300" 
+             Compressed="yes"
+             Id="*" 
+             Keywords="Installer"
+             Description="Avalon Wizard 1.1 Installer"
+             Manufacturer="Pavel Fedarovich"
+             InstallPrivileges="elevated"
+             InstallScope="perMachine"/>
+
+    <Media Id="1" Cabinet="AvalonWizard.1.1.cab" EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLDIR" Name="Avalon Wizard 1.1" FileSource="..\AvalonWizard">
+          <Component Id="GPL" >
+            <File Id="GPL" Name="COPYING.txt" KeyPath="yes" />
+          </Component>
+          <Component Id="LGPL" >
+            <File Id="LGPL" Name="COPYING.LESSER.txt" KeyPath="yes" />
+          </Component>
+          
+          <Directory Id="Bin" Name="Bin">           
+            <Directory Id="Netfx35" Name=".Net 3.5" FileSource="..\AvalonWizard\bin\Release\netfx35">
+              <Component Id="AvalonWizard.netfx35" Guid="{39077CA5-0570-4B7B-B8D3-777E13E0CAB7}">
+                <File Id="AvalonWizard.netfx35" Name="AvalonWizard.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="AvalonWizard.Design.netfx35" Guid="{7095D7ED-B6FA-4A1D-9EDC-C7E7C8743000}">
+                <File Id="AvalonWizard.Design.netfx35" Name="AvalonWizard.Design.4.0.dll" KeyPath="yes"  />
+              </Component>
+              <Component Id="AvalonWizardSample.netfx35" Guid="{D5989E67-AC98-4E04-90FE-E1CD7AA31D18}">
+                <File Id="AvalonWizardSample.netfx35" Name="AvalonWizardSample.exe" KeyPath="yes"
+                      Source="..\AvalonWizardSample\bin\Release\netfx35\AvalonWizardSample.exe"/>
+              </Component>
+              <Component Id="AvalonWizardSample.Config.netfx35" Guid="{C6BA44EB-E59A-4DF8-A404-9F9824BDCBBA}">
+                <File Id="AvalonWizardSample.Config.netfx35" Name="AvalonWizardSample.exe.config" KeyPath="yes"
+                      Source="..\AvalonWizardSample\bin\Release\netfx35\AvalonWizardSample.exe.config"/>
+              </Component>
+              <Component Id="Netfx35Registry" Guid="{BC646DBD-3E21-4A6A-B8D4-B031BD24EFEC}">
+                <CreateFolder />
+                <RegistryKey Action="createAndRemoveOnUninstall"
+                             Root="HKMU"
+                             Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\AvalonWizard 1.1">
+                  <RegistryValue Action="write"
+                                 Type="string"
+                                 Value="[Netfx35]"/>
+                  <RegistryKey Key="Toolbox"
+                               Action="createAndRemoveOnUninstall">
+                    <RegistryValue Action="write"
+                                   Type="string"
+                                   Value="Avalon Wizard 1.1" />
+                  </RegistryKey>
+                </RegistryKey>
+              </Component>
+            </Directory>
+            
+            <Directory Id="Netfx40" Name=".Net 4.0" FileSource="..\AvalonWizard\bin\Release\netfx40">
+              <Component Id="AvalonWizard.netfx40" Guid="{04D1D2C1-3366-41C0-9F17-BA59D53BB0B7}">
+                <File Id="AvalonWizard.netfx40" Name="AvalonWizard.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="AvalonWizard.Design.netfx40" Guid="{D54598CC-266B-44C1-BC02-5D143C23F718}">
+                <File Id="AvalonWizard.Design.netfx40" Name="AvalonWizard.Design.4.0.dll" KeyPath="yes"  />
+              </Component>
+              <Component Id="AvalonWizardSample.netfx40" Guid="{4B0856DD-9433-4C5A-A908-D6216848BDB1}">
+                <File Id="AvalonWizardSample.netfx40" Name="AvalonWizardSample.exe" KeyPath="yes"
+                      Source="..\AvalonWizardSample\bin\Release\netfx40\AvalonWizardSample.exe"/>
+              </Component>
+              <Component Id="AvalonWizardSample.Config.netfx40" Guid="{B6F2C2D3-3216-4111-975A-1781769F23C3}">
+                <File Id="AvalonWizardSample.Config.netfx40" Name="AvalonWizardSample.exe.config" KeyPath="yes"
+                      Source="..\AvalonWizardSample\bin\Release\netfx40\AvalonWizardSample.exe.config"/>
+              </Component>
+              <Component Id="Netfx40Registry" Guid="{6E633DEF-42F3-4273-A890-BAF4D7AC89D4}">
+                <CreateFolder />
+                <RegistryKey Action="createAndRemoveOnUninstall"
+                             Root="HKMU"
+                             Key="SOFTWARE\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\AvalonWizard 1.1">
+                  <RegistryValue Action="write"
+                                 Type="string"
+                                 Value="[Netfx40]"/>
+                  <RegistryKey Key="Toolbox"
+                               Action="createAndRemoveOnUninstall">
+                    <RegistryValue Action="write"
+                                   Type="string"
+                                   Value="Avalon Wizard 1.1" />
+                  </RegistryKey>
+                </RegistryKey>
+              </Component>
+            </Directory>     
+          </Directory>
+          
+          <Directory Id="Doc" Name="Doc" FileSource="..\Doc\Help\">
+            <Component Id="AvalonWizardHelp" Guid="{0FD9C6D1-5E99-4AAE-9B6E-CC69B132E5C3}">
+              <File Id="AvalonWizardReference.chm" Name="AvalonWizard Reference.chm" KeyPath="yes" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Netfx35Binaries" Title="Avalon Wizard binaries for .Net 3.5 SP1" Level="1" Absent="disallow"
+             ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
+      <ComponentRef Id="AvalonWizard.netfx35"/>
+      <ComponentRef Id="AvalonWizard.Design.netfx35"/>
+      <ComponentRef Id="AvalonWizardSample.netfx35"/>
+      <ComponentRef Id="AvalonWizardSample.Config.netfx35"/>
+      <ComponentRef Id="Netfx35Registry"/>
+    </Feature>
+    <Feature Id="Netfx40Binaries" Title="Avalon Wizard binaries for .Net 4.0" Level="1" Absent="disallow"
+             ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
+      <ComponentRef Id="AvalonWizard.netfx40"/>
+      <ComponentRef Id="AvalonWizard.Design.netfx40"/>
+      <ComponentRef Id="AvalonWizardSample.netfx40"/>
+      <ComponentRef Id="AvalonWizardSample.Config.netfx40"/>
+      <ComponentRef Id="Netfx40Registry"/>
+    </Feature>
+    <Feature Id="Doc" Title="Avalon Wizard documentation" Level="1" Absent="disallow"
+             ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
+      <ComponentRef Id="AvalonWizardHelp"/>
+    </Feature>
+    <Feature Id="License" Title="Avalon Wizard license" Level="1" Absent="disallow"
+             ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
+      <ComponentRef Id="GPL"/>
+      <ComponentRef Id="LGPL"/>
+    </Feature>
+
+    <WixVariable Id="WixUILicenseRtf" Value="LGPL.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="TopBanner.bmp" />
+
+    <Icon Id="AvalonWizard.ico" SourceFile="..\AvalonWizardSample\wizard.ico"/>
+    
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+    <Property Id='ARPCONTACT'>http://avalonwizard.codeplex.com/</Property>
+    <Property Id='ARPHELPLINK'>http://avalonwizard.codeplex.com/workitem/list/basic</Property>
+    <Property Id='ARPURLINFOABOUT'>http://avalonwizard.codeplex.com/</Property>
+    <Property Id='ARPURLUPDATEINFO'>http://avalonwizard.codeplex.com/</Property>
+    <Property Id='ARPSIZE'>2000</Property>
+    <Property Id='ARPPRODUCTICON'>AvalonWizard.ico</Property>
+  </Product>
+</Wix>

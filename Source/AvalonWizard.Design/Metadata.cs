@@ -18,8 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AvalonWizard.Aero;
 using AvalonWizard.Design.Adorners;
 using AvalonWizard.Design.Menu;
+using Microsoft.Windows.Design;
 using Microsoft.Windows.Design.Features;
 using Microsoft.Windows.Design.Metadata;
 
@@ -41,6 +43,24 @@ namespace AvalonWizard.Design
                 builder.AddCustomAttributes(
                     typeof(Wizard),
                     new FeatureAttribute(typeof(WizardAdornerProvider)));
+                builder.AddCustomAttributes(
+                    typeof(Wizard),
+                    new FeatureAttribute(typeof(WizardDefaultInitializer)));
+                builder.AddCustomAttributes(
+                    typeof (Wizard),
+                    new ToolboxBrowsableAttribute(true));
+                builder.AddCustomAttributes(
+                    typeof (WizardPage),
+                    new ToolboxBrowsableAttribute(true));
+                builder.AddCustomAttributes(
+                    typeof(AeroWizardHeader),
+                    new ToolboxBrowsableAttribute(false));
+                builder.AddCustomAttributes(
+                    typeof(AeroWizardPageChrome),
+                    new ToolboxBrowsableAttribute(false));
+                builder.AddCustomAttributes(
+                    typeof (WizardAdornerView),
+                    new ToolboxBrowsableAttribute(false));
 
                 return builder.CreateTable();
             }
