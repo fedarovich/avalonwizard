@@ -17,13 +17,12 @@
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>AvalonWizard Reference</HtmlHelpName>
     <Language>en-US</Language>
-    <CopyrightText>Copyright &amp;#169%3b Pavel Fedarovich, 2010</CopyrightText>
+    <CopyrightText>Copyright &amp;#169%3b Pavel Fedarovich, 2010-2011</CopyrightText>
     <HelpTitle>AvalonWizard Reference</HelpTitle>
     <RootNamespaceContainer>False</RootNamespaceContainer>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\AvalonWizard\bin\Debug\AvalonWizard.dll" xmlns="" />
-      <DocumentationSource sourceFile="..\AvalonWizard\bin\Debug\AvalonWizard.xml" xmlns="" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="..\AvalonWizard\bin\Release\netfx35\AvalonWizard.dll" />
+<DocumentationSource sourceFile="..\AvalonWizard\bin\Release\netfx35\AvalonWizard.xml" /></DocumentationSources>
     <FeedbackEMailLinkText>http://avalonwizard.codeplex.com/discussions</FeedbackEMailLinkText>
     <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
     <NamespaceSummaries>
@@ -33,6 +32,8 @@
       <NamespaceSummaryItem name="AvalonWizard.Extensions" isDocumented="True">Contains classes that provide extension methods.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="XamlGeneratedNamespace" isDocumented="False" />
     </NamespaceSummaries>
+    <HelpFileVersion>1.1.0.0</HelpFileVersion>
+    <ProjectSummary>Avalon Wizard 1.1.0 Documentation</ProjectSummary>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

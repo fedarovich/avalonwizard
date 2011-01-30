@@ -47,6 +47,9 @@ Copyright © Pavel Fedarovich, 2010-2011
               <Component Id="AvalonWizard.netfx35" Guid="{39077CA5-0570-4B7B-B8D3-777E13E0CAB7}">
                 <File Id="AvalonWizard.netfx35" Name="AvalonWizard.dll" KeyPath="yes" />
               </Component>
+              <Component Id="AvalonWizard.xml.netfx35" Guid="{83DEFC1A-7B19-42DA-A21A-C9E6CA9AA669}">
+                <File Id="AvalonWizard.xml.netfx35" Name="AvalonWizard.xml" KeyPath="yes" />
+              </Component>
               <Component Id="AvalonWizard.Design.netfx35" Guid="{7095D7ED-B6FA-4A1D-9EDC-C7E7C8743000}">
                 <File Id="AvalonWizard.Design.netfx35" Name="AvalonWizard.Design.4.0.dll" KeyPath="yes"  />
               </Component>
@@ -79,6 +82,9 @@ Copyright © Pavel Fedarovich, 2010-2011
             <Directory Id="Netfx40" Name=".Net 4.0" FileSource="..\AvalonWizard\bin\Release\netfx40">
               <Component Id="AvalonWizard.netfx40" Guid="{04D1D2C1-3366-41C0-9F17-BA59D53BB0B7}">
                 <File Id="AvalonWizard.netfx40" Name="AvalonWizard.dll" KeyPath="yes" />
+              </Component>
+              <Component Id="AvalonWizard.xml.netfx40" Guid="{C322F863-5C8E-4B16-AE93-246F964366B3}">
+                <File Id="AvalonWizard.xml.netfx40" Name="AvalonWizard.xml" KeyPath="yes" />
               </Component>
               <Component Id="AvalonWizard.Design.netfx40" Guid="{D54598CC-266B-44C1-BC02-5D143C23F718}">
                 <File Id="AvalonWizard.Design.netfx40" Name="AvalonWizard.Design.4.0.dll" KeyPath="yes"  />
@@ -122,6 +128,7 @@ Copyright © Pavel Fedarovich, 2010-2011
     <Feature Id="Netfx35Binaries" Title="Avalon Wizard binaries for .Net 3.5 SP1" Level="1" Absent="disallow"
              ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
       <ComponentRef Id="AvalonWizard.netfx35"/>
+      <ComponentRef Id="AvalonWizard.xml.netfx35"/>
       <ComponentRef Id="AvalonWizard.Design.netfx35"/>
       <ComponentRef Id="AvalonWizardSample.netfx35"/>
       <ComponentRef Id="AvalonWizardSample.Config.netfx35"/>
@@ -130,6 +137,7 @@ Copyright © Pavel Fedarovich, 2010-2011
     <Feature Id="Netfx40Binaries" Title="Avalon Wizard binaries for .Net 4.0" Level="1" Absent="disallow"
              ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
       <ComponentRef Id="AvalonWizard.netfx40"/>
+      <ComponentRef Id="AvalonWizard.xml.netfx40"/>
       <ComponentRef Id="AvalonWizard.Design.netfx40"/>
       <ComponentRef Id="AvalonWizardSample.netfx40"/>
       <ComponentRef Id="AvalonWizardSample.Config.netfx40"/>
