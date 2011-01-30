@@ -33,6 +33,11 @@ namespace AvalonWizard
             this.wizard = wizard;
         }
 
+        /// <summary>
+        /// Inserts an item into the collection at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which item should be inserted.</param>
+        /// <param name="item">The object to insert.</param>
         protected override void InsertItem(int index, WizardPage item)
         {
             if (item.Wizard != null)
@@ -43,6 +48,10 @@ namespace AvalonWizard
             base.InsertItem(index, item);
         }
 
+        /// <summary>
+        /// Removes the item at the specified index of the collection.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index)
         {
             if (index >= 0 && index < Items.Count)
@@ -53,6 +62,9 @@ namespace AvalonWizard
             base.RemoveItem(index);
         }
 
+        /// <summary>
+        /// Removes all items from the collection. 
+        /// </summary>
         protected override void ClearItems()
         {
             foreach (var item in Items)
@@ -62,6 +74,11 @@ namespace AvalonWizard
             base.ClearItems();
         }
 
+        /// <summary>
+        /// Replaces the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to replace.</param>
+        /// <param name="item">The new value for the element at the specified index.</param>
         protected override void SetItem(int index, WizardPage item)
         {
             if (item.Wizard != null)
@@ -77,6 +94,6 @@ namespace AvalonWizard
             base.SetItem(index, item);
         }
 
-        private Wizard wizard;
+        private readonly Wizard wizard;
     }
 }

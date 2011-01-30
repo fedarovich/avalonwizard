@@ -191,6 +191,14 @@ namespace AvalonWizard.Aero
             return IntPtr.Zero;
         }
 
+        /// <summary>
+        /// Invoked when an unhandled MouseLeftButtonDown routed event is raised on this element.
+        /// Implement this method to add class handling for this event.
+        /// </summary>
+        /// <param name="e">
+        /// The MouseButtonEventArgs that contains the event data. 
+        /// The event data reports that the left mouse button was pressed.
+        /// </param>
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
