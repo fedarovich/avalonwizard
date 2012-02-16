@@ -320,6 +320,7 @@ namespace AvalonWizard
             UpdateFirstLastPage(wizard);
 
             wizard.OnCurrentPageChanged(new CurrentPageChangedEventArgs(oldPage, newPage));
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private static object CoerceCurrentPage(DependencyObject d, object basevalue)
