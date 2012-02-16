@@ -167,14 +167,14 @@ namespace AvalonWizard
         /// </summary>
         public bool AllowFinish
         {
-            get { return (bool)GetValue(AllowFinsihProperty); }
-            set { SetValue(AllowFinsihProperty, value); }
+            get { return (bool)GetValue(AllowFinishProperty); }
+            set { SetValue(AllowFinishProperty, value); }
         }
 
         /// <summary>
         /// Identifies the <see cref="AllowFinish"/> property.
         /// </summary>
-        public static readonly DependencyProperty AllowFinsihProperty =
+        public static readonly DependencyProperty AllowFinishProperty =
             DependencyProperty.Register("AllowFinish", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
 
         #endregion
