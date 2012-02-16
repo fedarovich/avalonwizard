@@ -93,7 +93,6 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                     </ComboBox>
                 </StackPanel>
             </aw:WizardPage>
-            <aw:WizardPage />
             <aw:WizardPage Header="Page 4: Action Buttons">
                 <StackPanel>
                     <Button Margin="20,5" Command="{x:Static aw:WizardCommands.NextPage}">
