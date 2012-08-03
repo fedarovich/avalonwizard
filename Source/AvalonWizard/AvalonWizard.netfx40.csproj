@@ -68,6 +68,7 @@
     <Compile Include="..\Include\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="AeroWizard.cs" />
     <Compile Include="Aero\AeroWizardHeader.cs" />
     <Compile Include="Aero\AeroWizardPageChrome.cs" />
     <Compile Include="Aero\DesktopWindowManager.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="DefaultNavigationStrategy.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="INavigationStrategy.cs" />
+    <Compile Include="AeroGlowStyle.cs" />
     <Compile Include="Wizard97.cs" />
     <Compile Include="WizardCommands.cs" />
     <Compile Include="Designer.cs" />

@@ -140,6 +140,18 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
 
     <ControlTemplate TargetType="{x:Type aero:AeroWizardHeader}" x:Key="AeroWizardHeader_ControlTemplate">
         <Grid Background="{TemplateBinding Background}" Height="34" IsHitTestVisible="True">
+            <Grid.Resources>
+                <Style TargetType="TextBlock" x:Key="AeroWizardHeaderTextBlockStyle">
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" />
+                    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" />
+                    <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}" />
+                    <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}" />
+                    <Setter Property="TextDecorations" Value="{DynamicResource {x:Static SystemFonts.CaptionFontTextDecorationsKey}}" />
+                    <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Title, Mode=OneWay}" />
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="26" />
@@ -150,18 +162,68 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                 <RowDefinition Height="5" />
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Margin="1,0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource NavigationWindowBackButtonStyle}" Command="{x:Static Member=local:WizardCommands.PreviousPage}" Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:Wizard}, Path=CurrentPage.ShowBack,
-                        Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Image Grid.Column="1" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Icon}" />
-            <TextBlock Grid.Column="2" VerticalAlignment="Center" Name="PART_caption" Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Title}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" FontStyle="{DynamicResource {x:Static SystemFonts.CaptionFontStyleKey}}" FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}" TextDecorations="{DynamicResource {x:Static SystemFonts.CaptionFontTextDecorationsKey}}"></TextBlock>
+            <Rectangle Grid.Column="2" Name="PART_BlurredRectangleGlow" 
+                       HorizontalAlignment="{Binding ElementName=PART_caption, Path=HorizontalAlignment}" 
+                       Margin="{Binding ElementName=PART_caption, Path=Margin}"
+                       VerticalAlignment="{Binding ElementName=PART_caption, Path=VerticalAlignment}" 
+                       Width="{Binding ElementName=PART_caption, Path=ActualWidth}" Fill="White" Opacity="0.5"
+                       Height="{Binding ElementName=PART_caption, Path=ActualHeight}" Visibility="Collapsed" >
+                <Rectangle.Effect>
+                    <BlurEffect Radius="11" KernelType="Gaussian" />
+                </Rectangle.Effect>
+            </Rectangle>
+            <Grid Grid.Column="2" Name="PART_BlurredTextGlow" Visibility="Collapsed">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource AeroWizardHeaderTextBlockStyle}">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                </Grid.Resources>
+                <TextBlock>
+                    <TextBlock.Effect>
+                        <BlurEffect Radius="20" KernelType="Gaussian" />
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock>
+                    <TextBlock.Effect>
+                        <BlurEffect Radius="16" KernelType="Gaussian" />
+                    </TextBlock.Effect>
+                </TextBlock>
+                <TextBlock>
+                    <TextBlock.Effect>
+                        <BlurEffect Radius="12" KernelType="Gaussian" />
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Grid>
+            <TextBlock Grid.Column="2" Name="PART_caption" Style="{StaticResource AeroWizardHeaderTextBlockStyle}"/>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsCompositionEnabled" Value="true">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsCompositionEnabled" Value="true" />
+                    <Condition Property="GlowStyle" Value="BlurredText" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BlurredTextGlow" Property="Visibility" Value="Visible" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsCompositionEnabled" Value="true" />
+                    <Condition Property="GlowStyle" Value="BlurredRectangle" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BlurredRectangleGlow" Property="Visibility" Value="Visible" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsCompositionEnabled" Value="true" />
+                    <Condition Property="GlowStyle" Value="GlowingText" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_caption" Property="TextBlock.BitmapEffect">
                     <Setter.Value>
                         <OuterGlowBitmapEffect GlowColor="White" GlowSize="10" Opacity="0.7" />
                     </Setter.Value>
                 </Setter>
-            </Trigger>
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 </ResourceDictionary>

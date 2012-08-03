@@ -46,6 +46,11 @@ namespace AvalonWizardSample
             cmbWizardStyle.Items.Add(WizardStyle.Wizard97);
             cmbWizardStyle.Items.Add(WizardStyle.Auto);
 
+            cmbAeroGlowStyle.Items.Add(AeroGlowStyle.None);
+            cmbAeroGlowStyle.Items.Add(AeroGlowStyle.BlurredText);
+            cmbAeroGlowStyle.Items.Add(AeroGlowStyle.BlurredRectangle);
+            cmbAeroGlowStyle.Items.Add(AeroGlowStyle.GlowingText);
+
             wizard.Finished += LogWizardEvent;
             wizard.Cancelled += LogWizardEvent;
             wizard.CurrentPageChanged += LogWizardEvent;

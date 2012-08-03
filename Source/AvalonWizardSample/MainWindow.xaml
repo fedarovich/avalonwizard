@@ -47,6 +47,7 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -60,14 +61,22 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Grid.Row="1" Grid.Column="0">Wizard Title</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, 
+                    <TextBlock Grid.Row="1" Grid.Column="0">Aero Glow</TextBlock>
+                    <ComboBox Name="cmbAeroGlowStyle" Grid.Row="1" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding RelativeSource={RelativeSource AncestorType=aw:Wizard}, Path=(aw:AeroWizard.GlowStyle), Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="aw:AeroGlowStyle">
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Grid.Row="2" Grid.Column="0">Wizard Title</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, 
                                 Path=Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Grid.Row="2" Grid.Column="0">Page Title</TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
-                                Path=Header, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Grid.Row="3" Grid.Column="0">Page Subtitle</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="0">Page Title</TextBlock>
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
+                                Path=Header, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Grid.Row="4" Grid.Column="0">Page Subtitle</TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type aw:WizardPage}}, 
                                  Path=(aw:Wizard97.Subtitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </aw:WizardPage>
