@@ -66,6 +66,8 @@
     <Compile Include="..\Include\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="AeroGlowStyle.cs" />
+    <Compile Include="AeroWizard.cs" />
     <Compile Include="Aero\AeroWizardHeader.cs" />
     <Compile Include="Aero\AeroWizardPageChrome.cs" />
     <Compile Include="Aero\DesktopWindowManager.cs" />

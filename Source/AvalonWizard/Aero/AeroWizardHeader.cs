@@ -18,6 +18,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -92,6 +93,25 @@ namespace AvalonWizard.Aero
             IsActivePropertyKey.DependencyProperty;
 
         #endregion [IsActive]
+
+        #region [GlowStyle]
+
+        /// <summary>
+        /// Gets or sets Aero glow style for the wizard header.
+        /// </summary>
+        public AeroGlowStyle GlowStyle
+        {
+            get { return (AeroGlowStyle)GetValue(GlowStyleProperty); }
+            set { SetValue(GlowStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies <see cref="GlowStyle"/> dependency property.
+        /// </summary>
+        public static DependencyProperty GlowStyleProperty = DependencyProperty.Register(
+            "GlowStyle", typeof (AeroGlowStyle), typeof (AeroWizardHeader), new PropertyMetadata(AeroGlowStyle.BlurredText));
+
+        #endregion
 
         #region [Private Members]
 

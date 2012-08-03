@@ -67,7 +67,7 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <aero:AeroWizardHeader Grid.Row="0" />
+            <aero:AeroWizardHeader Grid.Row="0" GlowStyle="{Binding Path=(local:AeroWizard.GlowStyle), RelativeSource={RelativeSource TemplatedParent}}" />
 
             <ContentPresenter Grid.Row="1" Content="{TemplateBinding CurrentPage}" />
             <Grid Grid.Row="2" Background="{TemplateBinding Background}">
