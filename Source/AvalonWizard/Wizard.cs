@@ -69,7 +69,9 @@ namespace AvalonWizard
                 OnBackCommand,
                 OnBackCommandCanExecute);
             CommandManager.RegisterClassCommandBinding(typeof(Wizard), backBinding);
-
+            CommandManager.RegisterClassInputBinding(typeof(Wizard),
+                new KeyBinding(WizardCommands.PreviousPage, Key.Left, ModifierKeys.Alt));
+            
             var nextBinding = new CommandBinding(WizardCommands.NextPage,
                 OnNextCommand,
                 OnNextCommandCanExecute);
