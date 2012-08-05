@@ -77,6 +77,8 @@
     <Compile Include="Converters\VisibilityMultiConverter.cs" />
     <Compile Include="CurrentPageChangedEventArgs.cs" />
     <Compile Include="DefaultNavigationStrategy.cs" />
+    <Compile Include="ExtendedMouseAction.cs" />
+    <Compile Include="ExtendedMouseGesture.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="INavigationStrategy.cs" />
     <Compile Include="Wizard97.cs" />
