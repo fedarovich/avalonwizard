@@ -5,3 +5,5 @@ glob:*.suo
 glob:*.user
 glob:Builds
 glob:*.log
+syntax: glob
+*.dic

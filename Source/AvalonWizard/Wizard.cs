@@ -52,6 +52,9 @@ namespace AvalonWizard
             UpdateEffectiveWizardStyle(WizardStyle.Auto);
         }
 
+        /// <summary>
+        /// Initializes static members of the <see cref="Wizard" /> class.
+        /// </summary>
         static Wizard()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Wizard), new FrameworkPropertyMetadata(typeof(Wizard)));
@@ -64,11 +67,15 @@ namespace AvalonWizard
             CommandManager.RegisterClassCommandBinding(typeof(Wizard), backBinding);
             CommandManager.RegisterClassInputBinding(typeof(Wizard),
                 new KeyBinding(WizardCommands.PreviousPage, Key.Left, ModifierKeys.Alt));
+            CommandManager.RegisterClassInputBinding(typeof(Wizard),
+                new InputBinding(WizardCommands.PreviousPage, new ExtendedMouseGesture(ExtendedMouseAction.XButton1Click)));
             
             var nextBinding = new CommandBinding(WizardCommands.NextPage,
                 OnNextCommand,
                 OnNextCommandCanExecute);
             CommandManager.RegisterClassCommandBinding(typeof(Wizard), nextBinding);
+            CommandManager.RegisterClassInputBinding(typeof(Wizard),
+                new InputBinding(WizardCommands.NextPage, new ExtendedMouseGesture(ExtendedMouseAction.XButton2Click)));
 
             var finishBinding = new CommandBinding(WizardCommands.Finish,
                 OnFinishCommand,
