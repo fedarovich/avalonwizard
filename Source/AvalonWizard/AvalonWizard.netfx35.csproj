@@ -89,6 +89,10 @@
     <Compile Include="WizardPageConfirmEventArgs.cs" />
     <Compile Include="WizardPageInitEventArgs.cs" />
     <Compile Include="WizardStyle.cs" />
+    <Page Include="Themes\Aero2.NormalColor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\AeroWizardHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
