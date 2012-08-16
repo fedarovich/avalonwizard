@@ -23,7 +23,7 @@ using System.Windows.Markup;
 
 [assembly: AssemblyCompany("Pavel Fedarovich")]
 [assembly: AssemblyProduct("AvalonWizard")]
-[assembly: AssemblyCopyright("Copyright © Pavel Fedarovich, 2010-2011")]
+[assembly: AssemblyCopyright("Copyright © Pavel Fedarovich, 2010-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
