@@ -1,0 +1,49 @@
+﻿<!--
+This file is part of AvalonWizard.
+
+AvalonWizard is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 2.1 of the License, or
+(at your option) any later version.
+
+AvalonWizard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.    
+-->
+<Window x:Class="AvalonWizardSample.Mvvm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:aw="http://schemas.pavel.fedarovich.com/winfx/2010/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:AvalonWizardSample.Mvvm.ViewModels"
+        xmlns:v="clr-namespace:AvalonWizardSample.Mvvm.Views" 
+        xmlns:local="clr-namespace:AvalonWizardSample.Mvvm"
+        Title="AvalonWizard MVVM Sample" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:WizardViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="{x:Type vm:Page0ViewModel}">
+            <v:Page0View />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Type vm:Page1ViewModel}">
+            <v:Page1View />
+        </DataTemplate>
+
+        <local:ImplicitDataTemplateSelector x:Key="PageSelector" />
+    </Window.Resources>
+    
+    <Grid>
+        <aw:Wizard WizardStyle="{Binding SelectedStyle}">
+            <i:Interaction.Behaviors>
+                <aw:WizardMvvmBehavior
+                    ItemsSource="{Binding Pages}" 
+                    ItemTemplateSelector="{StaticResource PageSelector}"/>
+            </i:Interaction.Behaviors>
+        </aw:Wizard>
+    </Grid>
+</Window>
