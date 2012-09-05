@@ -217,6 +217,7 @@ namespace AvalonWizard.Mvvm
         public ICommand CommitCommand
         {
             get { return commitCommand; }
+            protected set { commitCommand = value; }
         }
 
         /// <summary>
@@ -226,6 +227,7 @@ namespace AvalonWizard.Mvvm
         public ICommand RollbackCommand
         {
             get { return rollbackCommand; }
+            protected set { rollbackCommand = value; }
         }
 
         /// <summary>
@@ -235,8 +237,10 @@ namespace AvalonWizard.Mvvm
         public ICommand InitializeCommand
         {
             get { return initializeCommand; }
+            protected set { initializeCommand = value; }
         }
 
+        [NotifyPropertyChangedInvocator]
         protected virtual void NotifyOfPropertyChanged(String propertyName)
         {
             var handler = PropertyChanged;

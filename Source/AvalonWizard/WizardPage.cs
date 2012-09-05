@@ -18,6 +18,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AvalonWizard
 {
@@ -107,8 +108,8 @@ namespace AvalonWizard
         /// <summary>
         /// Identifies the <see cref="AllowCancel"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty AllowCancelProperty =
-            DependencyProperty.Register("AllowCancel", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty AllowCancelProperty = DependencyProperty.Register(
+            "AllowCancel", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true, OnAllowCommandChanged));
 
         #endregion
 
@@ -127,8 +128,8 @@ namespace AvalonWizard
         /// <summary>
         /// Identifies the <see cref="AllowNext"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty AllowNextProperty =
-            DependencyProperty.Register("AllowNext", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty AllowNextProperty = DependencyProperty.Register(
+            "AllowNext", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true, OnAllowCommandChanged));
 
         #endregion [AllowNext Property]
 
@@ -147,8 +148,8 @@ namespace AvalonWizard
         /// <summary>
         /// Identifies the <see cref="AllowBack"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty AllowBackProperty =
-            DependencyProperty.Register("AllowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty AllowBackProperty = DependencyProperty.Register(
+            "AllowBack", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true, OnAllowCommandChanged));
 
         #endregion [AllowBack Property]
 
@@ -166,8 +167,8 @@ namespace AvalonWizard
         /// <summary>
         /// Identifies the <see cref="AllowFinish"/> property.
         /// </summary>
-        public static readonly DependencyProperty AllowFinishProperty =
-            DependencyProperty.Register("AllowFinish", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty AllowFinishProperty = DependencyProperty.Register(
+            "AllowFinish", typeof(bool), typeof(WizardPage), new UIPropertyMetadata(true, OnAllowCommandChanged));
 
         #endregion
 
@@ -341,6 +342,15 @@ namespace AvalonWizard
             var args = new WizardPageConfirmEventArgs(this);
             OnRollback(args);
             return !args.Cancel;
+        }
+
+        #endregion
+
+        #region [Private Methods]
+
+        private static void OnAllowCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         #endregion

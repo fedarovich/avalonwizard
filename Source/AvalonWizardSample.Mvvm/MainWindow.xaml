@@ -33,7 +33,15 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
         <DataTemplate x:Key="{x:Type vm:Page1ViewModel}">
             <v:Page1View />
         </DataTemplate>
-
+        <DataTemplate x:Key="{x:Type vm:Page2ViewModel}">
+            <v:Page2View />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Type vm:Page3ViewModel}">
+            <v:Page3View />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Type vm:Page4ViewModel}">
+            <v:Page4View />
+        </DataTemplate>
         <local:ImplicitDataTemplateSelector x:Key="PageSelector" />
     </Window.Resources>
     

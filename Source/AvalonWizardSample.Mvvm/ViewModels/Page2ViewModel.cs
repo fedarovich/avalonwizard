@@ -17,29 +17,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows.Threading;
 using AvalonWizard.Mvvm;
+using GalaSoft.MvvmLight.Command;
 
 namespace AvalonWizardSample.Mvvm.ViewModels
 {
-    public class Page1ViewModel : WizardPageViewModelBase
+    public class Page2ViewModel : WizardPageViewModelBase
     {
-        public Page1ViewModel()
+        private readonly object skipToPage;
+        private readonly IList<OperationViewModel> operations;
+
+        public Page2ViewModel(Object skipToPage, IList<OperationViewModel> operations)
         {
-            Header = "Page 2: Page Properties";
+            Header = "Page 3: Operation Selection";
+
+            this.skipToPage = skipToPage;
+            this.operations = operations;
+            CommitCommand = new RelayCommand(CommitCommandExecute);
         }
 
-        private bool allowCancel2 = true;
-        
-        public bool AllowCancel2
+        private void CommitCommandExecute()
         {
-            get { return allowCancel2; }
-            set
-            {
-                allowCancel2 = value;
-                NotifyOfPropertyChanged("AllowCancel2");
-            }
+            NextPage = operations.Any(op => op.IsSelected) ? null : skipToPage;
+        }
+
+        public IList<OperationViewModel> Operations
+        {
+            get { return operations; }
         }
     }
 }
