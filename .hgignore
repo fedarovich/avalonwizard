@@ -7,3 +7,4 @@ glob:Builds
 glob:*.log
 syntax: glob
 *.dic
+packages

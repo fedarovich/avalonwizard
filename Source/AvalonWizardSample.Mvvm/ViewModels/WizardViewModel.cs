@@ -16,23 +16,31 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using AvalonWizard;
+using GalaSoft.MvvmLight;
 
 namespace AvalonWizardSample.Mvvm.ViewModels
 {
-    public class WizardViewModel : INotifyPropertyChanged
+    public class WizardViewModel : ViewModelBase
     {
         private WizardStyle selectedStyle;
 
         public WizardViewModel()
         {
+            var operations = Enumerable.Range(1, 10)
+                .Select(i => new OperationViewModel("Operation " + i))
+                .ToArray();
+
+            var page4 = new Page4ViewModel();
+
             Pages = new List<Object>
             {
                 new Page0ViewModel(),
-                new Page1ViewModel()
+                new Page1ViewModel(),
+                new Page2ViewModel(page4, operations),
+                new Page3ViewModel(operations),
+                page4
             };
 
             WizardStyles = Enum.GetValues(typeof (WizardStyle)).Cast<WizardStyle>().ToList();
@@ -58,18 +66,9 @@ namespace AvalonWizardSample.Mvvm.ViewModels
                 if (selectedStyle != value)
                 {
                     selectedStyle = value;
-                    OnPropertyChanged("SelectedStyle");
+                    RaisePropertyChanged("SelectedStyle");
                 }
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

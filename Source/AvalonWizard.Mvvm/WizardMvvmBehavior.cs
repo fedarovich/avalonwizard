@@ -324,27 +324,14 @@ namespace AvalonWizard.Mvvm
             if (AssociatedObject == null)
                 return;
 
-            if (AssociatedObject.IsLoaded)
+            AssociatedObject.Pages.Clear();
+            if (newPageViewModels != null)
             {
-                AssociatedObject.Pages.Clear();
-                if (newPageViewModels != null)
+                foreach (Object pageViewModel in newPageViewModels)
                 {
-                    foreach (Object pageViewModel in newPageViewModels)
-                    {
-                        AssociatedObject.Pages.Add(GeneratePage(pageViewModel));
-                    }
+                    AssociatedObject.Pages.Add(GeneratePage(pageViewModel));
                 }
             }
-            else
-            {
-                AssociatedObject.Loaded += GeneratePagesWhenLoaded;
-            }
-        }
-
-        private void GeneratePagesWhenLoaded(object sender, RoutedEventArgs e)
-        {
-            AssociatedObject.Loaded -= GeneratePagesWhenLoaded;
-            GeneratePages(ItemsSource as IEnumerable);
         }
 
         private WizardPage GeneratePage(object pageViewModel)
@@ -415,17 +402,17 @@ namespace AvalonWizard.Mvvm
 
         private void BindThis(WizardPage page, DependencyProperty property, String path)
         {
-            page.SetBinding(property, new Binding(path) {Source = this});
+            page.SetBinding(property, new Binding(path) {Source = this, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
         }
 
         private void BindDefaultViewModel(WizardPage page, DependencyProperty property, IWizardPageViewModel source)
         {
-            page.SetBinding(property, new Binding(property.Name) {Source = source});
+            page.SetBinding(property, new Binding(property.Name) {Source = source, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
         }
 
         private void BindPageBehavior(WizardPageMvvmBehavior behavior, DependencyProperty property, IWizardPageViewModel source)
         {
-            BindingOperations.SetBinding(behavior, property, new Binding(property.Name) {Source = source});
+            BindingOperations.SetBinding(behavior, property, new Binding(property.Name) {Source = source, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
         }
 
         private void SetPagePropertyBinding(BindingBase binding, DependencyProperty property)

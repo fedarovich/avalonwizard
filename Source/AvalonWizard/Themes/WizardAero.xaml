@@ -19,7 +19,8 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="clr-namespace:AvalonWizard" 
     xmlns:conv="clr-namespace:AvalonWizard.Converters" 
-    xmlns:aero="clr-namespace:AvalonWizard.Aero">
+    xmlns:aero="clr-namespace:AvalonWizard.Aero" 
+    xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <conv:BooleanInverterConvertor x:Key="BooleanInverter" />
