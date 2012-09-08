@@ -71,7 +71,6 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Behaviors\MultiselectionBehavior.cs" />
-    <Compile Include="ImplicitDataTemplateSelector.cs" />
     <Compile Include="ViewModels\OperationViewModel.cs" />
     <Compile Include="ViewModels\Page0ViewModel.cs" />
     <Compile Include="ViewModels\Page1ViewModel.cs" />

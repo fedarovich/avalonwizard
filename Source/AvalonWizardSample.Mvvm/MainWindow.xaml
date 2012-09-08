@@ -27,22 +27,21 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
         <vm:WizardViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <DataTemplate x:Key="{x:Type vm:Page0ViewModel}">
+        <DataTemplate DataType="{x:Type vm:Page0ViewModel}">
             <v:Page0View />
         </DataTemplate>
-        <DataTemplate x:Key="{x:Type vm:Page1ViewModel}">
+        <DataTemplate DataType="{x:Type vm:Page1ViewModel}">
             <v:Page1View />
         </DataTemplate>
-        <DataTemplate x:Key="{x:Type vm:Page2ViewModel}">
+        <DataTemplate DataType="{x:Type vm:Page2ViewModel}">
             <v:Page2View />
         </DataTemplate>
-        <DataTemplate x:Key="{x:Type vm:Page3ViewModel}">
+        <DataTemplate DataType="{x:Type vm:Page3ViewModel}">
             <v:Page3View />
         </DataTemplate>
-        <DataTemplate x:Key="{x:Type vm:Page4ViewModel}">
+        <DataTemplate DataType="{x:Type vm:Page4ViewModel}">
             <v:Page4View />
         </DataTemplate>
-        <local:ImplicitDataTemplateSelector x:Key="PageSelector" />
     </Window.Resources>
     
     <Grid>
@@ -50,7 +49,6 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
             <i:Interaction.Behaviors>
                 <aw:WizardMvvmBehavior
                     ItemsSource="{Binding Pages}" 
-                    ItemTemplateSelector="{StaticResource PageSelector}"
                     Controller="{Binding WizardController}"/>
             </i:Interaction.Behaviors>
         </aw:Wizard>
