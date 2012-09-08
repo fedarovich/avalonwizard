@@ -117,12 +117,6 @@
     <EmbeddedResource Include="AvalonWizard.Wizard.VisualStudio.24bit.48x48.bmp" />
     <EmbeddedResource Include="AvalonWizard.WizardPage.Expression.24bit.48x48.png" />
     <EmbeddedResource Include="AvalonWizard.WizardPage.VisualStudio.24bit.48x48.bmp" />
-    <Content Include="COPYING.LESSER.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="COPYING.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Effects\Grayscale.ps" />
@@ -154,6 +148,14 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Apache License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="LGPL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
