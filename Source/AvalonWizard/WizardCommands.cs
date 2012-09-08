@@ -1,23 +1,20 @@
-﻿#region Licence
+﻿#region License
+// Copyright © Pavel Fedarovich, 2010-2012
+// 
 // This file is part of AvalonWizard.
-// 
-// AvalonWizard is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 2.1 of the License, or
-// (at your option) any later version.
-// 
+//  
+// You may at your option receive a license to Avalon Wizard under 
+// either the terms of the Apache License version 2.0 or 
+// the GNU Lesser General Public License (LGPL) version 2.1 or any later version.
+//  
 // AvalonWizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
-// 
-// You should have received a copy of the GNU Lesser General Public License
-// along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//  
+// You may obtain a copy of the Apache License at [http://www.apache.org/licenses/LICENSE-2.0].
+// You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Windows.Input;
 
 namespace AvalonWizard
@@ -56,17 +53,17 @@ namespace AvalonWizard
         ///         <description>Navigates to the specified page.</description>
         ///     </item>
         ///     <item>
-        ///         <term><see cref="String"/></term>
+        ///         <term><see cref="string"/></term>
         ///         <description>Navigates to the page with the specified name.</description>
         ///     </item>
         ///     <item>
-        ///         <term>Any type convertible to <see cref="Int32"/></term>
+        ///         <term>Any type convertible to <see cref="int"/></term>
         ///         <description>Navigates to the page with the specified index in the <see cref="Wizard.Pages"/> collection.</description>
         ///     </item>
         /// </list>
         /// <para>
-        /// If the parameter is of type <see cref="String"/> then the wizard will search for the page with the corresponding name.
-        /// If the page is not found, then the wizard will try to convert the string to <see cref="Int32"/> 
+        /// If the parameter is of type <see cref="string"/> then the wizard will search for the page with the corresponding name.
+        /// If the page is not found, then the wizard will try to convert the string to <see cref="int"/> 
         /// and use it as the index in <see cref="Wizard.Pages"/> collection.
         /// </para>
         /// </remarks>

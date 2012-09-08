@@ -128,14 +128,12 @@
     <Resource Include="wizard.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="COPYING.LESSER.txt">
+    <None Include="Apache License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="COPYING.txt">
+    </None>
+    <None Include="LGPL.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AvalonWizard\AvalonWizard.netfx35.csproj">

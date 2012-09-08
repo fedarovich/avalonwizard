@@ -1,0 +1,17 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=Add_0020License_0020Header/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="Add License Header"&gt;&lt;CSUpdateFileHeader&gt;True&lt;/CSUpdateFileHeader&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;EmbraceInRegion&gt;False&lt;/EmbraceInRegion&gt;&lt;RegionName&gt;&lt;/RegionName&gt;&lt;/CSOptimizeUsings&gt;&lt;/Profile&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderRegionName/@EntryValue">License</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright © Pavel Fedarovich, 2010-$CURRENT_YEAR$&#xD;
+&#xD;
+This file is part of AvalonWizard.&#xD;
+ &#xD;
+You may at your option receive a license to Avalon Wizard under &#xD;
+either the terms of the Apache License version 2.0 or &#xD;
+the GNU Lesser General Public License (LGPL) version 2.1 or any later version.&#xD;
+ &#xD;
+AvalonWizard is distributed in the hope that it will be useful,&#xD;
+but WITHOUT ANY WARRANTY; without even the implied warranty of&#xD;
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&#xD;
+ &#xD;
+You may obtain a copy of the Apache License at [http://www.apache.org/licenses/LICENSE-2.0].&#xD;
+You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].</s:String></wpf:ResourceDictionary>
