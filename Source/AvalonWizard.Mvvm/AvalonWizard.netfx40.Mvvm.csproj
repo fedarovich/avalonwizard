@@ -50,6 +50,12 @@
     <Compile Include="..\Include\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
+    <Compile Include="IWizardController.cs" />
+    <Compile Include="WizardController.cs" />
+    <Compile Include="WizardNavigationDirection.cs" />
+    <Compile Include="WizardNavigationEventArgs.cs" />
+    <Compile Include="WizardPageConfirmParameters.cs" />
+    <Compile Include="WizardPageInitParameters.cs" />
     <Compile Include="IWizardPageViewModel.cs" />
     <Compile Include="JetBrains.Annotations.cs" />
     <Compile Include="WizardMvvmBehavior.cs" />

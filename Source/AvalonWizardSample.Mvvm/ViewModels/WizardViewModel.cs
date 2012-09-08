@@ -18,14 +18,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AvalonWizard;
+using AvalonWizard.Mvvm;
 using GalaSoft.MvvmLight;
 
 namespace AvalonWizardSample.Mvvm.ViewModels
 {
     public class WizardViewModel : ViewModelBase
     {
+        private readonly IWizardController wizardController = new WizardController();
         private WizardStyle selectedStyle;
-
+        
         public WizardViewModel()
         {
             var operations = Enumerable.Range(1, 10)
@@ -38,8 +40,8 @@ namespace AvalonWizardSample.Mvvm.ViewModels
             {
                 new Page0ViewModel(),
                 new Page1ViewModel(),
-                new Page2ViewModel(page4, operations),
-                new Page3ViewModel(operations),
+                new Page2ViewModel(page4, operations, wizardController),
+                new Page3ViewModel(page4, operations, wizardController),
                 page4
             };
 
@@ -69,6 +71,11 @@ namespace AvalonWizardSample.Mvvm.ViewModels
                     RaisePropertyChanged("SelectedStyle");
                 }
             }
+        }
+
+        public IWizardController WizardController
+        {
+            get { return wizardController; }
         }
     }
 }

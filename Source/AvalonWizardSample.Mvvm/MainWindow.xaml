@@ -50,7 +50,8 @@ along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
             <i:Interaction.Behaviors>
                 <aw:WizardMvvmBehavior
                     ItemsSource="{Binding Pages}" 
-                    ItemTemplateSelector="{StaticResource PageSelector}"/>
+                    ItemTemplateSelector="{StaticResource PageSelector}"
+                    Controller="{Binding WizardController}"/>
             </i:Interaction.Behaviors>
         </aw:Wizard>
     </Grid>

@@ -28,6 +28,8 @@ namespace AvalonWizard.Mvvm
     /// </summary>
     public class WizardPageMvvmBehavior : Behavior<WizardPage>
     {
+        #region [InitializeCommand]
+
         /// <summary>
         /// Gets or sets the initialize command.
         /// </summary>
@@ -38,12 +40,16 @@ namespace AvalonWizard.Mvvm
             set { SetValue(InitializeCommandProperty, value); }
         }
 
+        #endregion
+
         /// <summary>
         /// Identifies <see cref="InitializeCommand"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty InitializeCommandProperty =
             DependencyProperty.Register("InitializeCommand", typeof(ICommand), typeof(WizardPageMvvmBehavior), 
             new UIPropertyMetadata(null));
+
+        #region [CommitCommand]
 
         /// <summary>
         /// Gets or sets the commit command.
@@ -62,6 +68,10 @@ namespace AvalonWizard.Mvvm
             DependencyProperty.Register("CommitCommand", typeof(ICommand), typeof(WizardPageMvvmBehavior), 
             new UIPropertyMetadata(null));
 
+        #endregion
+
+        #region [RollbackCommand]
+
         /// <summary>
         /// Gets or sets the rollback command.
         /// </summary>
@@ -79,6 +89,10 @@ namespace AvalonWizard.Mvvm
             DependencyProperty.Register("RollbackCommand", typeof(ICommand), typeof(WizardPageMvvmBehavior), 
             new UIPropertyMetadata(null));
 
+        #endregion
+
+        #region [NextPage]
+
         /// <summary>
         /// Gets or sets the next page view model.
         /// </summary>
@@ -95,6 +109,8 @@ namespace AvalonWizard.Mvvm
         public static readonly DependencyProperty NextPageProperty =
             DependencyProperty.Register("NextPage", typeof(object), typeof(WizardPageMvvmBehavior), 
             new UIPropertyMetadata(null, OnNextPageChanged));
+
+        #endregion
 
         /// <summary>
         /// Called after the behavior is attached to an AssociatedObject.
@@ -125,31 +141,31 @@ namespace AvalonWizard.Mvvm
             UpdateNextPage();
             if (InitializeCommand != null)
             {
-                InitializeCommand.Execute(e);
+                InitializeCommand.Execute(new WizardPageInitParameters(e));
             }
         }
 
         private void OnCommit(object sender, WizardPageConfirmEventArgs e)
         {
-            InvokeCommand(CommitCommand, e);
+            InvokeCommand(CommitCommand, new WizardPageConfirmParameters(e));
         }
 
         private void OnRollback(object sender, WizardPageConfirmEventArgs e)
         {
-            InvokeCommand(RollbackCommand, e);
+            InvokeCommand(RollbackCommand, new WizardPageConfirmParameters(e));
         }
 
-        private void InvokeCommand(ICommand command, WizardPageConfirmEventArgs e)
+        private void InvokeCommand(ICommand command, WizardPageConfirmParameters parameters)
         {
             if (command != null)
             {
-                if (command.CanExecute(e))
+                if (command.CanExecute(parameters))
                 {
-                    command.Execute(e);
+                    command.Execute(parameters);
                 }
                 else
                 {
-                    e.Cancel = true;
+                    parameters.Cancel = true;
                 }
             }
         }

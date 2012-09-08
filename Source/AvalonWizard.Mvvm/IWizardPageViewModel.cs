@@ -16,12 +16,16 @@
 #endregion
 using System;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace AvalonWizard.Mvvm
 {
+    /// <summary>
+    /// Describes the standard view model of a wizard page. 
+    /// If your view model implement this interface, its properties will be 
+    /// automatically bound to the corresponding <see cref="WizardPage"/>.
+    /// </summary>
     public interface IWizardPageViewModel : INotifyPropertyChanged
     {
         /// <summary>

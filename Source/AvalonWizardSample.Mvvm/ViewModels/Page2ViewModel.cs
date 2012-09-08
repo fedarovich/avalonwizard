@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using AvalonWizard.Mvvm;
 using GalaSoft.MvvmLight.Command;
 
@@ -26,14 +27,30 @@ namespace AvalonWizardSample.Mvvm.ViewModels
     {
         private readonly object skipToPage;
         private readonly IList<OperationViewModel> operations;
+        private readonly IWizardController wizardController;
 
-        public Page2ViewModel(Object skipToPage, IList<OperationViewModel> operations)
+        public Page2ViewModel(Object skipToPage, 
+            IList<OperationViewModel> operations,
+            IWizardController wizardController)
         {
             Header = "Page 3: Operation Selection";
 
             this.skipToPage = skipToPage;
             this.operations = operations;
+            this.wizardController = wizardController;
             CommitCommand = new RelayCommand(CommitCommandExecute);
+            SkipCommand = new RelayCommand(SkipCommandExecute);
+        }
+
+        public IList<OperationViewModel> Operations
+        {
+            get { return operations; }
+        }
+
+        public ICommand SkipCommand
+        {
+            get;
+            private set;
         }
 
         private void CommitCommandExecute()
@@ -41,9 +58,9 @@ namespace AvalonWizardSample.Mvvm.ViewModels
             NextPage = operations.Any(op => op.IsSelected) ? null : skipToPage;
         }
 
-        public IList<OperationViewModel> Operations
+        private void SkipCommandExecute()
         {
-            get { return operations; }
+            wizardController.NextPage(skipToPage);
         }
     }
 }
