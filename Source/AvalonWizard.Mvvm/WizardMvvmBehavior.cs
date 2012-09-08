@@ -25,6 +25,9 @@ using System.Windows.Interactivity;
 
 namespace AvalonWizard.Mvvm
 {
+    /// <summary>
+    /// Provides properties to simplify implementation of MVVM pattern.
+    /// </summary>
     public class WizardMvvmBehavior : Behavior<Wizard>
     {
         private readonly IDictionary<Object, WizardPage> pageCache = 
@@ -34,12 +37,19 @@ namespace AvalonWizard.Mvvm
 
         #region [ItemSource]
 
+        /// <summary>
+        /// Gets or sets the items source.
+        /// </summary>
+        /// <value>The items source.</value>
         public Object ItemsSource
         {
             get { return GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies <see cref="ItemsSource"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ItemsSourceProperty =
             DependencyProperty.Register("ItemsSource", typeof(Object), typeof(WizardMvvmBehavior), 
                 new UIPropertyMetadata(null, OnItemsSourceChanged));
@@ -48,12 +58,19 @@ namespace AvalonWizard.Mvvm
 
         #region [ItemTemplate]
 
+        /// <summary>
+        /// Gets or sets the item template.
+        /// </summary>
+        /// <value>The item template.</value>
         public DataTemplate ItemTemplate
         {
             get { return (DataTemplate)GetValue(ItemTemplateProperty); }
             set { SetValue(ItemTemplateProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies <see cref="ItemTemplate"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ItemTemplateProperty =
             DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(WizardMvvmBehavior), 
                 new UIPropertyMetadata(null));
@@ -62,16 +79,45 @@ namespace AvalonWizard.Mvvm
 
         #region [ItemTemplateSelector]
 
+        /// <summary>
+        /// Gets or sets the item template selector.
+        /// </summary>
+        /// <value>The item template selector.</value>
         public DataTemplateSelector ItemTemplateSelector
         {
             get { return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty); }
             set { SetValue(ItemTemplateSelectorProperty, value); }
         }
 
+        /// <summary>
+        /// Identifies <see cref="ItemTemplateSelector"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ItemTemplateSelectorProperty =
             DependencyProperty.Register("ItemTemplateSelector", typeof(DataTemplateSelector), typeof(WizardMvvmBehavior), 
                 new UIPropertyMetadata(null));
         
+        #endregion
+
+        #region [Controller]
+
+        /// <summary>
+        /// Gets or sets the controller.
+        /// The controller can be used to navigate between pages.
+        /// </summary>
+        /// <value>The controller.</value>
+        public IWizardController Controller
+        {
+            get { return (IWizardController)GetValue(ControllerProperty); }
+            set { SetValue(ControllerProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies <see cref="Controller"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ControllerProperty = DependencyProperty.Register(
+            "Controller", typeof(IWizardController), typeof(WizardMvvmBehavior), 
+            new UIPropertyMetadata(null, OnControllerChanged));
+
         #endregion
 
         #endregion
@@ -476,6 +522,75 @@ namespace AvalonWizard.Mvvm
             {
                 BindingOperations.SetBinding(behavior, property, binding);
             }
+        }
+
+        private static void OnControllerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var behavior = (WizardMvvmBehavior)d;
+
+            var oldController = e.OldValue as IWizardController;
+            if (oldController != null)
+            {
+                oldController.NavigationRequested -= behavior.OnNavigationRequested;
+                oldController.FinishRequested -= behavior.OnFinishRequested;
+                oldController.CancelRequested -= behavior.OnCancelRequested;
+            }
+
+            var newController = e.NewValue as IWizardController;
+            if (newController != null)
+            {
+                newController.CancelRequested += behavior.OnCancelRequested;
+                newController.FinishRequested += behavior.OnFinishRequested;
+                newController.NavigationRequested += behavior.OnNavigationRequested;
+            }
+        }
+
+        private void OnNavigationRequested(object sender, WizardNavigationEventArgs e)
+        {
+            if (AssociatedObject == null)
+                return;
+
+            if (e.Direction == WizardNavigationDirection.Back)
+            {
+                AssociatedObject.PreviousPage();
+            }
+            else
+            {
+                if (e.Target == null)
+                {
+                    AssociatedObject.NextPage();
+                }
+                else if (e.Target is Int32)
+                {
+                    AssociatedObject.NextPageByIndex((int) e.Target);
+                }
+                else if (e.Target is String)
+                {
+                    AssociatedObject.NextPageByName((String) e.Target);
+                }
+                else if (e.Target is WizardPage)
+                {
+                    AssociatedObject.NextPage((WizardPage)e.Target);
+                }
+                else
+                {
+                    var page = AssociatedObject.Pages.FirstOrDefault(p => p.DataContext == e.Target);
+                    if (page != null)
+                        AssociatedObject.NextPage(page);
+                }
+            }
+        }
+
+        private void OnFinishRequested(object sender, EventArgs e)
+        {
+            if (AssociatedObject != null)
+                AssociatedObject.Finish();
+        }
+
+        private void OnCancelRequested(object sender, EventArgs e)
+        {
+            if (AssociatedObject != null)
+                AssociatedObject.Cancel();
         }
 
         #region Behavior<Wizard> overrides.

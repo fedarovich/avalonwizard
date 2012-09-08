@@ -10,6 +10,8 @@ namespace AvalonWizardSample.Mvvm.ViewModels
     public class Page3ViewModel : WizardPageViewModelBase
     {
         private readonly IList<OperationViewModel> operations;
+        private readonly object resultPage;
+        private readonly IWizardController wizardController;
         private readonly DispatcherTimer timer = new DispatcherTimer();
 
         private int operationCount;
@@ -19,17 +21,26 @@ namespace AvalonWizardSample.Mvvm.ViewModels
         private bool isFinishing;
         private bool showProgress;
 
-        public Page3ViewModel(IList<OperationViewModel> operations)
+        public Page3ViewModel(object resultPage, IList<OperationViewModel> operations, IWizardController wizardController)
         {
             Header = "Page 4: Operation Progress";
 
             this.operations = operations;
-            
-            InitializeCommand = new RelayCommand(InitializeCommandExecute);
+            this.resultPage = resultPage;
+            this.wizardController = wizardController;
+
+            InitializeCommand = new RelayCommand<WizardPageInitParameters>(InitializeCommandExecute);
+            timer.Tick += OnTimer;
         }
 
-        private void InitializeCommandExecute()
+        private void InitializeCommandExecute(WizardPageInitParameters parameters)
         {
+            if (parameters.PreviousPage == resultPage)
+            {
+                wizardController.PreviousPage();
+                return;
+            }
+
             OperationCount = operations.Count(op => op.IsSelected);
             CurrentOperation = 0;
             ProgressText = "Initializing...";
@@ -40,7 +51,6 @@ namespace AvalonWizardSample.Mvvm.ViewModels
             AllowBack = false;
             AllowNext = false;
 
-            timer.Tick += OnTimer;
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Start();
         }

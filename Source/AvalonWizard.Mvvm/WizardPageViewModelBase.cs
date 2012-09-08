@@ -15,15 +15,16 @@
 // along with AvalonWizard.  If not, see <http://www.gnu.org/licenses/>.
 #endregion
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace AvalonWizard.Mvvm
 {
+    /// <summary>
+    /// The base implementation of <see cref="IWizardPageViewModel"/>.
+    /// It's recommended to inherit your page view models from this class.
+    /// </summary>
     public class WizardPageViewModelBase : IWizardPageViewModel
     {
         private object header;
@@ -38,9 +39,6 @@ namespace AvalonWizard.Mvvm
         private bool showNext = true;
         private bool showBack = true;
         private object nextPage;
-        private ICommand commitCommand;
-        private ICommand rollbackCommand;
-        private ICommand initializeCommand;
 
         /// <summary>
         /// Occurs when property is changed.
@@ -216,8 +214,8 @@ namespace AvalonWizard.Mvvm
         /// <value>The commit command.</value>
         public ICommand CommitCommand
         {
-            get { return commitCommand; }
-            protected set { commitCommand = value; }
+            get; 
+            protected set;
         }
 
         /// <summary>
@@ -226,8 +224,8 @@ namespace AvalonWizard.Mvvm
         /// <value>The rollback command.</value>
         public ICommand RollbackCommand
         {
-            get { return rollbackCommand; }
-            protected set { rollbackCommand = value; }
+            get; 
+            protected set;
         }
 
         /// <summary>
@@ -236,10 +234,14 @@ namespace AvalonWizard.Mvvm
         /// <value>The initialize command.</value>
         public ICommand InitializeCommand
         {
-            get { return initializeCommand; }
-            protected set { initializeCommand = value; }
+            get; 
+            protected set;
         }
 
+        /// <summary>
+        /// Notifies the view of property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
         protected virtual void NotifyOfPropertyChanged(String propertyName)
         {

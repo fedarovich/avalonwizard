@@ -22,5 +22,6 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
+        <Button Grid.Row="1" Margin="5" Content="Skip" Command="{Binding SkipCommand}" />
     </Grid>
 </UserControl>
