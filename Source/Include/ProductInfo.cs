@@ -33,6 +33,14 @@ using System.Reflection;
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
 [assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
-[assembly: AssemblyInformationalVersion("1.2.0 RC1")]
+
+#if NET35
+[assembly: AssemblyFileVersion("1.2.0.35")]
+[assembly: AssemblyInformationalVersion("1.2.0 RC for .Net 3.5")]
+#elif NET40
+[assembly: AssemblyFileVersion("1.2.0.40")]
+[assembly: AssemblyInformationalVersion("1.2.0 RC for .Net 4.0")]
+#endif
+
+
 
