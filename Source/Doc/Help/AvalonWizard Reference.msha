@@ -1,0 +1,20 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AvalonWizard Reference</title>
+</head>
+<body class="vendor-book">
+    <div class="details">
+        <span class="vendor">Pavel Fedarovich</span>
+        <span class="locale">en-us</span>
+        <span class="product">AvalonWizard Reference</span>
+        <span class="name">AvalonWizard Reference</span>
+    </div>
+    <div class="package-list">
+        <div class="package">
+            <!-- NOTE: The "name" span value cannot contain any periods! -->
+            <span class="name">AvalonWizard Reference</span>
+            <a class="current-link" href="AvalonWizard Reference.mshc">AvalonWizard Reference.mshc</a>
+        </div>
+    </div>
+</body>
+</html>

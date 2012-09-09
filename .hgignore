@@ -8,3 +8,4 @@ glob:*.log
 syntax: glob
 *.dic
 packages
+*.shfbproj_*
