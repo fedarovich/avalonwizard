@@ -36,10 +36,10 @@ using System.Reflection;
 
 #if NET35
 [assembly: AssemblyFileVersion("1.2.0.35")]
-[assembly: AssemblyInformationalVersion("1.2.0 RC for .Net 3.5")]
+[assembly: AssemblyInformationalVersion("1.2.0 for .Net 3.5")]
 #elif NET40
 [assembly: AssemblyFileVersion("1.2.0.40")]
-[assembly: AssemblyInformationalVersion("1.2.0 RC for .Net 4.0")]
+[assembly: AssemblyInformationalVersion("1.2.0 for .Net 4.0")]
 #endif
 
 
