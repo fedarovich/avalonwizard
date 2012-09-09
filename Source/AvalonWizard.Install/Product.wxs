@@ -39,6 +39,10 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
           <Component Id="LGPL" >
             <File Id="LGPL" Name="LGPL.txt" KeyPath="yes" />
           </Component>
+          <Component Id="Readme">
+            <File Id="Readme" Name="readme.txt" KeyPath="yes"
+                  Source="..\AvalonWizard.Install\readme.txt"/>
+          </Component>
           
           <Directory Id="Bin" Name="Bin">           
             <Directory Id="Netfx35" Name=".Net 3.5" FileSource="..\AvalonWizard\bin\Release\netfx35">
@@ -58,6 +62,18 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
               <Component Id="AvalonWizardSample.Config.netfx35" Guid="{C6BA44EB-E59A-4DF8-A404-9F9824BDCBBA}">
                 <File Id="AvalonWizardSample.Config.netfx35" Name="AvalonWizardSample.exe.config" KeyPath="yes"
                       Source="..\AvalonWizardSample\bin\Release\netfx35\AvalonWizardSample.exe.config"/>
+              </Component>
+              <Component Id="AvalonWizard.netfx35.Mvvm" Guid="{2FBA7E58-F5F1-466D-BB58-80A0D5F96604}">
+                <File Id="AvalonWizard.netfx35.Mvvm" Name="AvalonWizard.Mvvm.dll" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx35\AvalonWizard.Mvvm.dll"/>
+              </Component>
+              <Component Id="AvalonWizard.netfx35.Mvvm.xml" Guid="{68FCE3EC-11C2-43D0-97AC-DE5B887C95EB}">
+                <File Id="AvalonWizard.netfx35.Mvvm.xml" Name="AvalonWizard.Mvvm.xml" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx35\AvalonWizard.Mvvm.xml"/>
+              </Component>
+              <Component Id="System.Windows.Interactivity.netfx35" Guid="{D1F4BD7B-F30C-4E4A-B0B1-408EC2A8DB49}">
+                <File Id="System.Windows.Interactivity.netfx35" Name="System.Windows.Interactivity.dll" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx35\System.Windows.Interactivity.dll"/>
               </Component>
               <Component Id="Netfx35Registry" Guid="{BC646DBD-3E21-4A6A-B8D4-B031BD24EFEC}">
                 <CreateFolder />
@@ -96,6 +112,30 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
                 <File Id="AvalonWizardSample.Config.netfx40" Name="AvalonWizardSample.exe.config" KeyPath="yes"
                       Source="..\AvalonWizardSample\bin\Release\netfx40\AvalonWizardSample.exe.config"/>
               </Component>
+              <Component Id="AvalonWizard.netfx40.Mvvm" Guid="{A04B56C1-849E-443E-BAAA-A1E4FD8CE755}">
+                <File Id="AvalonWizard.netfx40.Mvvm" Name="AvalonWizard.Mvvm.dll" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx40\AvalonWizard.Mvvm.dll"/>
+              </Component>
+              <Component Id="AvalonWizard.netfx40.Mvvm.xml" Guid="{B43800A3-675A-420F-A6A9-5B2D9EAA3908}">
+                <File Id="AvalonWizard.netfx40.Mvvm.xml" Name="AvalonWizard.Mvvm.xml" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx40\AvalonWizard.Mvvm.xml"/>
+              </Component>
+              <Component Id="System.Windows.Interactivity.netfx40" Guid="{A8C97A78-9C2F-4507-8FD0-D765251CC810}">
+                <File Id="System.Windows.Interactivity.netfx40" Name="System.Windows.Interactivity.dll" KeyPath="yes"
+                      Source="..\AvalonWizard.Mvvm\bin\Release\netfx40\System.Windows.Interactivity.dll"/>
+              </Component>
+              <Component Id="AvalonWizardSample.netfx40.Mvvm" Guid="{10020541-9179-4F3D-984D-FDB897FACFC1}">
+                <File Id="AvalonWizardSample.netfx40.Mvvm" Name="AvalonWizardSample.Mvvm.exe" KeyPath="yes"
+                      Source="..\AvalonWizardSample.Mvvm\bin\Release\netfx40\AvalonWizardSample.Mvvm.exe"/>
+              </Component>
+              <Component Id="GalaSoft.MvvmLight.WPF4" Guid="{5B7ABABB-BC39-45EB-8E2F-9556F2AEC14E}">
+                <File Id="GalaSoft.MvvmLight.WPF4" Name="GalaSoft.MvvmLight.WPF4.dll" KeyPath="yes"
+                      Source="..\AvalonWizardSample.Mvvm\bin\Release\netfx40\GalaSoft.MvvmLight.WPF4.dll"/>
+              </Component>
+              <Component Id="GalaSoft.MvvmLight.Extras.WPF4" Guid="{586EC736-0536-477B-8EE5-45C3A75B8558}">
+                <File Id="GalaSoft.MvvmLight.Extras.WPF4" Name="GalaSoft.MvvmLight.Extras.WPF4.dll" KeyPath="yes"
+                      Source="..\AvalonWizardSample.Mvvm\bin\Release\netfx40\GalaSoft.MvvmLight.Extras.WPF4.dll"/>
+              </Component>              
               <Component Id="Netfx40Registry" Guid="{6E633DEF-42F3-4273-A890-BAF4D7AC89D4}">
                 <CreateFolder />
                 <RegistryKey Action="createAndRemoveOnUninstall"
@@ -120,6 +160,15 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
             <Component Id="AvalonWizardHelp" Guid="{0FD9C6D1-5E99-4AAE-9B6E-CC69B132E5C3}">
               <File Id="AvalonWizardReference.chm" Name="AvalonWizard Reference.chm" KeyPath="yes" />
             </Component>
+            <Directory Id="MSHelpViewer" Name="MS Help Viewer" FileSource="..\Doc\Help\">
+              <Component Id="AvalonWizardMSHelpViewer" Guid="{48E1F20D-5D24-4708-B5A3-C7F51AF4386C}">
+                <File Id="AvalonWizardReference.msha" Name="AvalonWizard Reference.msha" />
+                <File Id="AvalonWizardReference.mshc" Name="AvalonWizard Reference.mshc" />
+                <File Id="HelpLibraryManagerLauncher.exe" Name="HelpLibraryManagerLauncher.exe" />
+                <File Id="Install_AvalonWizardReference.bat" Name="Install_AvalonWizard Reference.bat" />
+                <File Id="Remove_AvalonWizardReference.bat" Name="Remove_AvalonWizard Reference.bat" />
+              </Component>
+            </Directory>
           </Directory>
         </Directory>
       </Directory>
@@ -132,6 +181,9 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
       <ComponentRef Id="AvalonWizard.Design.netfx35"/>
       <ComponentRef Id="AvalonWizardSample.netfx35"/>
       <ComponentRef Id="AvalonWizardSample.Config.netfx35"/>
+      <ComponentRef Id="AvalonWizard.netfx35.Mvvm"/>
+      <ComponentRef Id="AvalonWizard.netfx35.Mvvm.xml"/>
+      <ComponentRef Id="System.Windows.Interactivity.netfx35"/>
       <ComponentRef Id="Netfx35Registry"/>
     </Feature>
     <Feature Id="Netfx40Binaries" Title="Avalon Wizard binaries for .Net 4.0" Level="1" Absent="disallow"
@@ -141,11 +193,19 @@ You may obtain a copy of the LGPL at [http://www.gnu.org/licenses/].
       <ComponentRef Id="AvalonWizard.Design.netfx40"/>
       <ComponentRef Id="AvalonWizardSample.netfx40"/>
       <ComponentRef Id="AvalonWizardSample.Config.netfx40"/>
+      <ComponentRef Id="AvalonWizard.netfx40.Mvvm"/>
+      <ComponentRef Id="AvalonWizard.netfx40.Mvvm.xml"/>
+      <ComponentRef Id="System.Windows.Interactivity.netfx40"/>
+      <ComponentRef Id="AvalonWizardSample.netfx40.Mvvm"/>
+      <ComponentRef Id="GalaSoft.MvvmLight.WPF4"/>
+      <ComponentRef Id="GalaSoft.MvvmLight.Extras.WPF4"/>
       <ComponentRef Id="Netfx40Registry"/>
     </Feature>
     <Feature Id="Doc" Title="Avalon Wizard documentation" Level="1" Absent="disallow"
              ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
       <ComponentRef Id="AvalonWizardHelp"/>
+      <ComponentRef Id="AvalonWizardMSHelpViewer"/>
+      <ComponentRef Id="Readme" />
     </Feature>
     <Feature Id="License" Title="Avalon Wizard license" Level="1" Absent="disallow"
              ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no">
